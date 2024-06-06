@@ -9,8 +9,9 @@ import java.util.HashMap;
 
 public class AdminDashboard extends JFrame {
 
-    public final static int WIDTH = 1024;
-    public final static int HEIGHT = 800;
+    public final static int WIDTH = 800;
+    public final static int HEIGHT = 600;
+    private JButton selectedButton;
     JPanel rightPanel ;
     JPanel rightContainer;
 
@@ -45,7 +46,17 @@ public class AdminDashboard extends JFrame {
 
         for (HashMap.Entry<String, JPanel> item : navItems.entrySet()) {
             JButton button = createCustomButton(item.getKey(), "", new Font("Roboto Mono", Font.PLAIN, 12), e -> {
-                System.out.println( item.getKey() + " clicked");
+                if (selectedButton!=null){
+                    selectedButton.setForeground(Color.BLACK); // Change text color back to normal
+                    selectedButton.setBorderPainted(false); // Hide border
+                    selectedButton.setOpaque(false); // Make background transparent
+                    selectedButton.setBackground(null); // Reset background
+                }
+                //System.out.println(item + " clicked");
+                selectedButton = button;
+                button.setForeground(Color.WHITE); // Change text color on hover
+                button.setOpaque(true); // Make background opaque
+                button.setBackground(Color.GRAY);
                 updateRightPanel( item.getValue());
             });
             button.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -113,25 +124,24 @@ public class AdminDashboard extends JFrame {
         button.setIcon(scaledIcon);
         button.setIconTextGap(8);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Set cursor to hand
-        button.addActionListener(listener);
 
         // Mouse listener for hover effect
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                button.setForeground(Color.WHITE); // Change text color on hover
-                button.setOpaque(true); // Make background opaque
-                button.setBackground(new Color(58, 145, 232)); // Light lavender background on hover
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                button.setForeground(Color.BLACK); // Change text color back to normal
-                button.setBorderPainted(false); // Hide border
-                button.setOpaque(false); // Make background transparent
-                button.setBackground(null); // Reset background
-            }
-        });// Make button background transparent
+//        button.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseEntered(MouseEvent e) {
+//                button.setForeground(Color.WHITE); // Change text color on hover
+//                button.setOpaque(true); // Make background opaque
+//                button.setBackground(new Color(84, 84, 84)); // Light lavender background on hover
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent e) {
+//                button.setForeground(Color.BLACK); // Change text color back to normal
+//                button.setBorderPainted(false); // Hide border
+//                button.setOpaque(false); // Make background transparent
+//                button.setBackground(null); // Reset background
+//            }
+//        });// Make button background transparent
         return button;
     }
 

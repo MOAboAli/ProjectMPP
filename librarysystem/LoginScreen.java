@@ -1,5 +1,7 @@
 package librarysystem;
 
+import utils.Utils;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -102,7 +104,7 @@ public class LoginScreen extends JFrame {
         JPanel rightPanel = new JPanel();
         rightPanel.setBackground(Color.WHITE);
         rightPanel.setLayout(new BorderLayout());
-        JLabel imageLabel = new JLabel(scaleImage("C:\\Users\\salah\\OneDrive\\Desktop\\Untitled.png", (WIDTH * 40) / 100, HEIGHT/2)); // Add your image path
+        JLabel imageLabel = new JLabel(scaleImage(Utils.assets_dir + "Untitled.png", (WIDTH * 40) / 100, HEIGHT / 2)); // Add your image path
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setVerticalAlignment(JLabel.BOTTOM);
         rightPanel.add(imageLabel, BorderLayout.CENTER);
