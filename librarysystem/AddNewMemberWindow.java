@@ -14,7 +14,7 @@ public class AddNewMemberWindow extends JPanel {
     private JButton addButton;
 
     public AddNewMemberWindow() {
-        setSize(600, 400);
+        setSize(AdminDashboard.WIDTH * 50 / 100, AdminDashboard.HEIGHT);
         // Main panel with BoxLayout to hold the two sections
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -66,9 +66,9 @@ public class AddNewMemberWindow extends JPanel {
         //Button
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BorderLayout(10, 10));
-        JButton addMemberButton = new JButton("Add New Member");
-        buttonPanel.add(addMemberButton, BorderLayout.CENTER);
-        addMemberButton.addActionListener(e -> addUser());
+        addButton = new JButton("Add New Member");
+        buttonPanel.add(addButton, BorderLayout.CENTER);
+        addButton.addActionListener(e -> addUser());
 
         memberPanel.add(firstNameLabel);
         memberPanel.add(fnameField);
@@ -82,7 +82,7 @@ public class AddNewMemberWindow extends JPanel {
         // Adding both panels to the main panel
         mainPanel.add(addressPanel);
         mainPanel.add(memberPanel);
-        mainPanel.add(addMemberButton);
+        mainPanel.add(addButton);
 
         // Adding the main panel to the frame
         add(mainPanel);
