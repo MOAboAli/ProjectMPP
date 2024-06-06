@@ -20,6 +20,8 @@ public class LoginScreen extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+
+
         // Left panel
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new GridBagLayout());
@@ -110,6 +112,8 @@ public class LoginScreen extends JFrame {
         rightPanel.add(imageLabel, BorderLayout.CENTER);
 
         add(rightPanel, BorderLayout.CENTER);
+
+
     }
     private JTextField createCustomTextField(String placeholder) {
         JTextField textField = new JTextField();

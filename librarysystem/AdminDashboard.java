@@ -10,14 +10,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
-public class AdminDashboard extends JFrame {
-    static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+public class AdminDashboard extends JFrame implements  LibWindow {
 
     public final static int WIDTH = (int) (0.8 * screenSize.width);
     public final static int HEIGHT = (int) (0.8 * screenSize.height);
     private JButton selectedButton;
     JPanel rightPanel ;
     JPanel rightContainer;
+
+    public final static AdminDashboard INSTANCE =new AdminDashboard();
+
 
     public AdminDashboard() {
         // Frame settings
@@ -150,5 +152,20 @@ public class AdminDashboard extends JFrame {
         rightContainer.add(newPanel, BorderLayout.CENTER); // Add new panel
         rightContainer.revalidate(); // Revalidate the container
         rightContainer.repaint(); // Repaint the container
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public boolean isInitialized() {
+        return false;
+    }
+
+    @Override
+    public void isInitialized(boolean val) {
+
     }
 }
