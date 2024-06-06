@@ -31,7 +31,6 @@ public class LoginScreen extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
 
 
-
         // Login Header
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -88,14 +87,13 @@ public class LoginScreen extends JFrame {
         boxPanel.add(titleLabel, BorderLayout.NORTH);
         boxPanel.add(textField, BorderLayout.CENTER);
 
-        leftPanel.add(boxPanel,gbc);
+        leftPanel.add(boxPanel, gbc);
 
         // Buttons
         gbc.gridy = 8;
         gbc.gridx = 1;
         JButton loginButton = new JButton("Login");
         leftPanel.add(loginButton, gbc);
-
 
 
         add(leftPanel, BorderLayout.WEST);
@@ -111,6 +109,7 @@ public class LoginScreen extends JFrame {
 
         add(rightPanel, BorderLayout.CENTER);
     }
+
     private JTextField createCustomTextField(String placeholder) {
         JTextField textField = new JTextField();
         textField.setFont(new Font("Arial", Font.PLAIN, 14));
