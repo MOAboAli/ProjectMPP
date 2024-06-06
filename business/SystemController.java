@@ -15,7 +15,6 @@ import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
 
-
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
 	
@@ -48,62 +47,75 @@ public class SystemController implements ControllerInterface {
 		return retval;
 	}
 
-	@Override
-	public void addBook(Book book) {
-		List<Book> books = new ArrayList<>();
-		DataAccess da = new DataAccessFacade();
-		da.addBook(book);
-	}
+
+    public void addNewMember(
+            String street,
+            String city,
+            String state,
+            String zip,
+            String memberID,
+            String fname, String lname, String tel) throws AddNewMemberException {
+        DataAccess da = new DataAccessFacade();
+        if (da.readMemberMap().containsKey(memberID))
+            throw new AddNewMemberException("This member ID already exist");
+        Address address = new Address(street, city, state, zip);
+        LibraryMember libraryMember = new LibraryMember(memberID, fname, lname, tel, address);
+        da.saveNewMember(libraryMember);
+    }
+
+
+    @Override
+    public void addBook(Book book) {
+        List<Book> books = new ArrayList<>();
+        DataAccess da = new DataAccessFacade();
+        da.addBook(book);
+    }
 
 
 
-	//////////////////////Book Check Out///////////////////////////
+    //////////////////////Book Check Out///////////////////////////
 
-	public void CheckBook(String BookISBN) throws BookNotFoundException {
-		if( !allBookIds().contains(BookISBN))
-			throw new BookNotFoundException();
-	}
+    public void CheckBook(String BookISBN) throws BookNotFoundException {
+        if( !allBookIds().contains(BookISBN))
+            throw new BookNotFoundException();
+    }
 
-	public void CheckMemeber(String MemberID) throws MemberNotFoundException {
-		if( ! allMemberIds().contains(MemberID))
-			throw new MemberNotFoundException();
-	}
+    public void CheckMemeber(String MemberID) throws MemberNotFoundException {
+        if( ! allMemberIds().contains(MemberID))
+            throw new MemberNotFoundException();
+    }
 
-	public BookCopy CheckAvailability(String BookID) throws NoBooksCopiesException {
-		DataAccessFacade DataAccess =new DataAccessFacade();
-		HashMap<String,Book> books = DataAccess. readBooksMap();
-		Book book = books.get(BookID);
-		if(book == null)
-			throw new NoBooksCopiesException();
-		if(!book.isAvailable())
-			throw new NoBooksCopiesException();
-		return book.getNextAvailableCopy();
-	}
-
-
-	public CheckoutEntry PutCheckOutEntry(BookCopy bookcopy,String MemberID) throws MemberNotFoundException {
-
-		DataAccessFacade DataAccess =new DataAccessFacade();
-		HashMap<String, CheckoutRecord> Records = DataAccess.readCheckoutRecord();
-		CheckoutRecord checkoutrecord = Records.get(MemberID);
-		if(checkoutrecord == null){
-			LibraryMember member = DataAccess.readMemberMap().get(MemberID);
-			if(member == null)
-				throw  new MemberNotFoundException();
-			checkoutrecord = new CheckoutRecord(member);
-		}
-
-		CheckoutEntry checkoutentry = new CheckoutEntry(LocalDate.now(),bookcopy,checkoutrecord);
-		checkoutrecord.addCheckoutEntry(checkoutentry);
-		DataAccess.saveNewCheckRecord(checkoutrecord);
-		DataAccess.saveNewCheckEntry(checkoutentry);
-		bookcopy.changeAvailability();
-		DataAccess.saveNewBook(bookcopy.getBook());
-		return checkoutentry;
-	}
+    public BookCopy CheckAvailability(String BookID) throws NoBooksCopiesException {
+        DataAccessFacade DataAccess =new DataAccessFacade();
+        HashMap<String,Book> books = DataAccess. readBooksMap();
+        Book book = books.get(BookID);
+        if(book == null)
+            throw new NoBooksCopiesException();
+        if(!book.isAvailable())
+            throw new NoBooksCopiesException();
+        return book.getNextAvailableCopy();
+    }
 
 
+    public CheckoutEntry PutCheckOutEntry(BookCopy bookcopy,String MemberID) throws MemberNotFoundException {
 
+        DataAccessFacade DataAccess =new DataAccessFacade();
+        HashMap<String, CheckoutRecord> Records = DataAccess.readCheckoutRecord();
+        CheckoutRecord checkoutrecord = Records.get(MemberID);
+        if(checkoutrecord == null){
+            LibraryMember member = DataAccess.readMemberMap().get(MemberID);
+            if(member == null)
+                throw  new MemberNotFoundException();
+            checkoutrecord = new CheckoutRecord(member);
+        }
 
-
+        CheckoutEntry checkoutentry = new CheckoutEntry(LocalDate.now(),bookcopy,checkoutrecord);
+        checkoutrecord.addCheckoutEntry(checkoutentry);
+        DataAccess.saveNewCheckRecord(checkoutrecord);
+        DataAccess.saveNewCheckEntry(checkoutentry);
+        bookcopy.changeAvailability();
+        DataAccess.saveNewBook(bookcopy.getBook());
+        return checkoutentry;
+    }
+	
 }
