@@ -4,10 +4,6 @@ import utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
 public class AdminDashboard extends JFrame implements  LibWindow {
@@ -17,7 +13,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
     public final static int WIDTH = (int) (0.8 * screenSize.width);
     public final static int HEIGHT = (int) (0.8 * screenSize.height);
     private JButton selectedButton;
-    JPanel rightPanel ;
+    JPanel rightPanel;
     JPanel rightContainer;
 
     public final static AdminDashboard INSTANCE =new AdminDashboard();
@@ -35,15 +31,21 @@ public class AdminDashboard extends JFrame implements  LibWindow {
 
         // Left panel for navigation
         JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new GridLayout(9, 1));
-        leftPanel.setPreferredSize(new Dimension(WIDTH * 40 / 100, getHeight()));
         leftPanel.setBackground(Color.LIGHT_GRAY);
+        leftPanel.setLayout(new BorderLayout(10, 10));
+        JPanel leftNavPanel = new JPanel();
+
+        leftNavPanel.setLayout(new GridLayout(9, 1));
+        leftNavPanel.setPreferredSize(new Dimension(WIDTH * 40 / 100, getHeight()));
+        leftNavPanel.setBackground(Color.LIGHT_GRAY);
+        leftPanel.add(leftNavPanel, BorderLayout.CENTER);
+
 
         // Add admin greeting
         JLabel adminLabel = new JLabel("Hello admin!", JLabel.CENTER);
         adminLabel.setFont(new Font("Arial", Font.BOLD, 20));
         adminLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(adminLabel);
+        leftNavPanel.add(adminLabel);
 
         // Add navigation buttons
         HashMap<String, JPanel> navItems = new HashMap<>();
@@ -54,42 +56,33 @@ public class AdminDashboard extends JFrame implements  LibWindow {
 
         for (HashMap.Entry<String, JPanel> item : navItems.entrySet()) {
             JButton button = createCustomButton(item.getKey(), "", new Font("Roboto Mono", Font.PLAIN, 12));
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (selectedButton!=null){
-                        selectedButton.setForeground(Color.BLACK); // Change text color back to normal
-                        selectedButton.setBorderPainted(false); // Hide border
-                        selectedButton.setOpaque(false); // Make background transparent
-                        selectedButton.setBackground(null); // Reset background
-                    }
-                    //System.out.println(item + " clicked");
-                    selectedButton = button;
-                    button.setForeground(Color.WHITE); // Change text color on hover
-                    button.setOpaque(true); // Make background opaque
-                    button.setBackground(Color.GRAY);
-                    updateRightPanel( item.getValue());
+            button.addActionListener(e -> {
+                if (selectedButton != null) {
+                    selectedButton.setForeground(Color.BLACK); // Change text color back to normal
+                    selectedButton.setBorderPainted(false); // Hide border
+                    selectedButton.setOpaque(false); // Make background transparent
+                    selectedButton.setBackground(null); // Reset background
                 }
+                selectedButton = button;
+                button.setForeground(Color.WHITE); // Change text color on hover
+                button.setOpaque(true); // Make background opaque
+                button.setBackground(Color.GRAY);
+                if (item.getValue() != null)
+                    updateRightPanel(item.getValue());
             });
             button.setAlignmentX(Component.LEFT_ALIGNMENT);
-            leftPanel.add(button);
+            leftNavPanel.add(button);
         }
 
         // Add settings icon
-        JButton settingsLabel = createCustomButton("Logout", Utils.assets_dir+"logout.png", new Font("Roboto Mono", Font.PLAIN, 12));
+        JButton settingsLabel = createCustomButton("Logout", Utils.assets_dir + "logout.png", new Font("Roboto Mono", Font.PLAIN, 12));
         settingsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        leftPanel.add(Box.createVerticalGlue());
-        leftPanel.add(settingsLabel);
+        leftPanel.add(settingsLabel, BorderLayout.SOUTH);
 
         // Right panel for user form
         rightPanel = new JPanel();
         rightPanel.setBackground(Color.white);
-        //rightPanel.setLayout(new GridLayout(7, 2, 10, 10));
-        //rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        // Add form fields
-
 
 
         // Add right panel and button panel into a container
@@ -111,7 +104,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         button.setFont(font); // Set custom font
         button.setContentAreaFilled(false); // Remove button background
         button.setBorderPainted(false); // Remove button border
-        button.setFocusPainted(false); // Remove focus painted border
+        button.setFocusPainted(false);
         button.setOpaque(false);
         ImageIcon originalIcon = new ImageIcon(iconPath);
         Image scaledImage = originalIcon.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
@@ -119,24 +112,6 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         button.setIcon(scaledIcon);
         button.setIconTextGap(8);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Set cursor to hand
-
-        // Mouse listener for hover effect
-//        button.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseEntered(MouseEvent e) {
-//                button.setForeground(Color.WHITE); // Change text color on hover
-//                button.setOpaque(true); // Make background opaque
-//                button.setBackground(new Color(84, 84, 84)); // Light lavender background on hover
-//            }
-//
-//            @Override
-//            public void mouseExited(MouseEvent e) {
-//                button.setForeground(Color.BLACK); // Change text color back to normal
-//                button.setBorderPainted(false); // Hide border
-//                button.setOpaque(false); // Make background transparent
-//                button.setBackground(null); // Reset background
-//            }
-//        });// Make button background transparent
         return button;
     }
 
