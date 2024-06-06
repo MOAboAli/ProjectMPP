@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CheckOutBooks extends JFrame {
+public class CheckOutBooksWindow extends JFrame {
 
 
     private JTextField textField;
@@ -20,7 +20,7 @@ public class CheckOutBooks extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
 
-    public CheckOutBooks() {
+    public CheckOutBooksWindow() {
         // Set up the JFrame
         setTitle("Check Out Books");
         setSize(1024, 500);
@@ -107,7 +107,7 @@ public class CheckOutBooks extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new CheckOutBooks().setVisible(true);
+                new CheckOutBooksWindow().setVisible(true);
             }
         });
     }
