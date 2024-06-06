@@ -44,6 +44,13 @@ public class DataAccessFacade implements DataAccess {
 		Records.put(entryId, Record);
 		saveToStorage(StorageType.CheckoutEntry, Records);
 	}
+
+	public void saveNewBook(Book Record) {
+		HashMap<String, Book> Records = readBooksMap()	;
+		String entryId = Record.getIsbn();
+		Records.put(entryId, Record);
+		saveToStorage(StorageType.BOOKS, Records);
+	}
 	
 
 	public  HashMap<String,Book> readBooksMap() {

@@ -62,6 +62,8 @@ public class SystemController implements ControllerInterface {
 		Book book = books.get(BookID);
 		if(book == null)
 			throw new NoBooksCopiesException();
+		if(!book.isAvailable())
+			throw new NoBooksCopiesException();
 		return book.getNextAvailableCopy();
 	}
 
@@ -82,6 +84,8 @@ public class SystemController implements ControllerInterface {
 		checkoutrecord.addCheckoutEntry(checkoutentry);
 		DataAccess.saveNewCheckRecord(checkoutrecord);
 		DataAccess.saveNewCheckEntry(checkoutentry);
+		bookcopy.changeAvailability();
+		DataAccess.saveNewBook(bookcopy.getBook());
 		return checkoutentry;
 	}
 
