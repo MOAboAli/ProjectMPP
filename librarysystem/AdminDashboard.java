@@ -12,6 +12,8 @@ import java.util.HashMap;
 
 public class AdminDashboard extends JFrame implements  LibWindow {
 
+    static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
     public final static int WIDTH = (int) (0.8 * screenSize.width);
     public final static int HEIGHT = (int) (0.8 * screenSize.height);
     private JButton selectedButton;
