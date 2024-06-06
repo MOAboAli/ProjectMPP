@@ -6,23 +6,22 @@ import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import business.Book;
-import business.BookCopy;
-import business.LibraryMember;
+import business.*;
 import dataaccess.DataAccessFacade.StorageType;
 
 
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS;
+		BOOKS, MEMBERS, USERS,CheckoutRecord,CheckoutEntry;
 	}
 	
-	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
-			+ "/dataaccess/storage"; //\src
+	public static final String OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage"; //\src
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations
@@ -32,8 +31,29 @@ public class DataAccessFacade implements DataAccess {
 		mems.put(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);	
 	}
-	
-	@SuppressWarnings("unchecked")
+
+	public void saveNewCheckEntry(CheckoutEntry Entry) {
+	    HashMap<String, CheckoutEntry> Ents = readCheckoutEntryMap()	;
+		String entryId = Entry.getCheckoutDate().toString();
+		Ents.put(entryId, Entry);
+		saveToStorage(StorageType.CheckoutEntry, Ents);
+	}
+
+	public void saveNewCheckRecord(CheckoutRecord Record) {
+		HashMap<String, CheckoutRecord> Records = readCheckoutRecord()	;
+		String entryId = Record.getLibraryMember().getMemberId();
+		Records.put(entryId, Record);
+		saveToStorage(StorageType.CheckoutEntry, Records);
+	}
+
+	public void saveNewBook(Book Record) {
+		HashMap<String, Book> Records = readBooksMap()	;
+		String entryId = Record.getIsbn();
+		Records.put(entryId, Record);
+		saveToStorage(StorageType.BOOKS, Records);
+	}
+
+
 	public  HashMap<String,Book> readBooksMap() {
 		//Returns a Map with name/value pairs being
 		//   isbn -> Book
@@ -44,10 +64,25 @@ public class DataAccessFacade implements DataAccess {
 	public HashMap<String, LibraryMember> readMemberMap() {
 		//Returns a Map with name/value pairs being
 		//   memberId -> LibraryMember
-		return (HashMap<String, LibraryMember>) readFromStorage(
-				StorageType.MEMBERS);
+		return (HashMap<String, LibraryMember>) readFromStorage(StorageType.MEMBERS);
 	}
-	
+
+	public HashMap<String, CheckoutEntry> readCheckoutEntryMap() {
+		//Returns a Map with name/value pairs being
+		//   memberId -> LibraryMember
+		return (HashMap<String, CheckoutEntry>) readFromStorage(StorageType.CheckoutEntry);
+
+	}
+
+	public HashMap<String, CheckoutRecord> readCheckoutRecord() {
+		//Returns a Map with name/value pairs being
+		//   memberId -> LibraryMember
+		return (HashMap<String, CheckoutRecord>) readFromStorage(StorageType.CheckoutRecord);
+
+	}
+
+
+
 	
 	@SuppressWarnings("unchecked")
 	public HashMap<String, User> readUserMap() {
@@ -77,20 +112,35 @@ public class DataAccessFacade implements DataAccess {
 		memberList.forEach(member -> members.put(member.getMemberId(), member));
 		saveToStorage(StorageType.MEMBERS, members);
 	}
-	
+
+	static void loadCheckoutEntryMap(List<CheckoutEntry> List) {
+		HashMap<String, CheckoutEntry> mainlits = new HashMap<String, CheckoutEntry>();
+		List.forEach(item -> mainlits.put(item.getCheckoutDate().toString(), item));
+		saveToStorage(StorageType.CheckoutEntry, mainlits);
+	}
+
+	static void loadCheckoutRecordMap(List<CheckoutRecord> List) {
+		HashMap<String, CheckoutRecord> mainlits = new HashMap<String, CheckoutRecord>();
+		List.forEach(item -> mainlits.put(item.getLibraryMember().getMemberId(), item));
+		saveToStorage(StorageType.CheckoutRecord, mainlits);
+	}
+
 	static void saveToStorage(StorageType type, Object ob) {
 		ObjectOutputStream out = null;
 		try {
 			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
+			if (!Files.exists(path)) {
+				Files.createFile(path);
+			}
 			out = new ObjectOutputStream(Files.newOutputStream(path));
 			out.writeObject(ob);
-		} catch(IOException e) {
-			e.printStackTrace();
-		} finally {
-			if(out != null) {
-				try {
-					out.close();
-				} catch(Exception e) {}
+			} catch(IOException e) {
+				e.printStackTrace();
+			} finally {
+				if(out != null) {
+					try {
+						out.close();
+					} catch(Exception e) {}
 			}
 		}
 	}
@@ -144,5 +194,30 @@ public class DataAccessFacade implements DataAccess {
 		}
 		private static final long serialVersionUID = 5399827794066637059L;
 	}
-	
+
+
+
+	// New methods
+
+	public void addBook(Book book) {
+		List<Book> books = new ArrayList<>();
+		HashMap<String,Book> readBooksMap = readBooksMap();
+		//List<book>
+		//da.loadBookMap(List<book>)
+		books = (List<Book>)ConvertHashMapToList(readBooksMap);
+		books.add(book);
+		DataAccessFacade.loadBookMap(books);
+		//return books;
+	}
+
+	private List<?> ConvertHashMapToList(HashMap<String,? extends Object> hashmap)
+	{
+		List<Object> list = new ArrayList<>();
+		for (Map.Entry<String, ? extends Object> set :
+				hashmap.entrySet()) {
+			list.add(set.getValue());
+		}
+
+		return list;
+	}
 }

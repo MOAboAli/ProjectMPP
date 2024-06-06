@@ -18,12 +18,14 @@ import javax.swing.JOptionPane;
 
 import business.ControllerInterface;
 
+import business.LoginException;
 import business.SystemController;
 
 
 public class LoginWindow extends JFrame implements LibWindow {
     public static final LoginWindow INSTANCE = new LoginWindow();
-	
+	ControllerInterface ci = new SystemController();
+
 	private boolean isInitialized = false;
 	
 	private JPanel mainPanel;
@@ -186,8 +188,17 @@ public class LoginWindow extends JFrame implements LibWindow {
     	
     	private void addLoginButtonListener(JButton butn) {
     		butn.addActionListener(evt -> {
-    			JOptionPane.showMessageDialog(this,"Successful Login");
-    				
+try {
+	ci.login(username.getText(), password.getText());
+	JOptionPane.showMessageDialog(this,"Successful Login");
+
+}
+catch (LoginException ex)
+{
+	JOptionPane.showMessageDialog(this,ex.getMessage());
+
+}
+
     		});
     	}
 	

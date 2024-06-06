@@ -17,13 +17,15 @@ final public class Book implements Serializable {
 	private List<Author> authors;
 	private String isbn;
 	private String title;
+	// Borrow duration 21 or 7
 	private int maxCheckoutLength;
-	public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors) {
+	public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors,int numberOfCopies) {
 		this.isbn = isbn;
 		this.title = title;
 		this.maxCheckoutLength = maxCheckoutLength;
 		this.authors = Collections.unmodifiableList(authors);
-		copies = new BookCopy[]{new BookCopy(this, 1, true)};	
+		// validate numberOfCopies is greater than 1
+		copies = new BookCopy[]{new BookCopy(this, numberOfCopies, true)};
 	}
 	
 	public void updateCopies(BookCopy copy) {
