@@ -100,8 +100,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   allBookIds.addActionListener(new AllBookIdsListener());
  	   allMemberIds = new JMenuItem("All Member Ids");
  	   allMemberIds.addActionListener(new AllMemberIdsListener());
-		addBook = new JMenuItem("Add Book");
-		addBook.addActionListener(new AddBookListener());
+
+		//addBook = new JMenuItem("Add Book");
+		//addBook.addActionListener(new AddBookListener());
  	   options.add(login);
  	   options.add(allBookIds);
  	   options.add(allMemberIds);
@@ -193,7 +194,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			//}
 			//System.out.println(sb.toString());
 			//AddBookWindow.INSTANCE.setData(sb.toString());
-			AddBookWindow.INSTANCE.pack();
+			//AddBookWindow.INSTANCE.pack();
 			//AddBookWindow.INSTANCE.setSize(660,500);
 			Util.centerFrameOnDesktop(AddBookWindow.INSTANCE);
 			AddBookWindow.INSTANCE.setVisible(true);

@@ -10,9 +10,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddBookWindow extends JFrame implements LibWindow  {
+public class AddBookWindow extends JPanel implements LibWindow  {
     ControllerInterface ci = new SystemController();
     public final static AddBookWindow INSTANCE =new AddBookWindow();
+
+    //public final static int WIDTH = (int) (0.8 * screenSize.width);
+    //public final static int HEIGHT = (int) (0.8 * screenSize.height);
 
     JPanel mainPanel;
     JMenuBar menuBar;
@@ -49,10 +52,12 @@ public class AddBookWindow extends JFrame implements LibWindow  {
     {
         this.authors = new ArrayList<>();
 
-        setTitle("Add Book");
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        //setTitle("Add Book");
+        //setSize(800, 600);
+        setSize(AdminDashboard.WIDTH * 50 / 100, AdminDashboard.HEIGHT);
+
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setLocationRelativeTo(null);
 
         isbnField = new JTextField(15);
         titleField = new JTextField(15);

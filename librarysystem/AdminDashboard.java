@@ -51,7 +51,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         HashMap<String, JPanel> navItems = new HashMap<>();
         navItems.put("Book Check Out", new CheckOutBooksWindow());
         navItems.put("New Member", new AddNewMemberWindow());
-        navItems.put("Item 2", null);
+        navItems.put("Add Book", new AddBookWindow());
         navItems.put("Item 3", null);
 
         for (HashMap.Entry<String, JPanel> item : navItems.entrySet()) {

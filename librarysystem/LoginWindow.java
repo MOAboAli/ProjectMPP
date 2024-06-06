@@ -1,11 +1,6 @@
 package librarysystem;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -212,9 +207,33 @@ public class LoginWindow extends JFrame implements LibWindow {
 			try {
 				ci.login(username.getText(), password.getText());
 				JOptionPane.showMessageDialog(this, "Successful Login");
+
+				EventQueue.invokeLater(() ->
+				{
+					AdminDashboard.INSTANCE.setTitle("Library Application");
+					AdminDashboard.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					AdminDashboard.INSTANCE.init();
+					centerFrameOnDesktop(AdminDashboard.INSTANCE);
+					AdminDashboard.INSTANCE.setVisible(true);
+
+
+
+					//LibrarySystem.getLoginWindow().setVisible(true);
+
+				});
+
 			} catch (LoginException ex) {
 				JOptionPane.showMessageDialog(this, ex.getMessage());
 			}
 		});
+	}
+
+	public static void centerFrameOnDesktop(Component f) {
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		int height = toolkit.getScreenSize().height;
+		int width = toolkit.getScreenSize().width;
+		int frameHeight = f.getSize().height;
+		int frameWidth = f.getSize().width;
+		f.setLocation(((width - frameWidth) / 2), (height - frameHeight) / 3);
 	}
 }

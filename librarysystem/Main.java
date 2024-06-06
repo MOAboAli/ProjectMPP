@@ -13,14 +13,20 @@ public class Main {
 	public static void main(String[] args) {
 	      EventQueue.invokeLater(() -> 
 	         {
-	            LibrarySystem.INSTANCE.setTitle("Library Application");
-	            LibrarySystem.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				LibrarySystem.INSTANCE.init();
-	            centerFrameOnDesktop(LibrarySystem.INSTANCE);
-	            LibrarySystem.INSTANCE.setVisible(true);
+	            //LibrarySystem.INSTANCE.setTitle("Library Application");
+	            //LibrarySystem.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				//LibrarySystem.INSTANCE.init();
+	            //centerFrameOnDesktop(LibrarySystem.INSTANCE);
+	            //LibrarySystem.INSTANCE.setVisible(true);
 
 				//LibrarySystem.getLoginWindow().setVisible(true);
+				// Login
 
+				 LoginWindow.INSTANCE.setTitle("Login Library Application");
+				 LoginWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				 LoginWindow.INSTANCE.init();
+				 centerFrameOnDesktop(LoginWindow.INSTANCE);
+				 LoginWindow.INSTANCE.setVisible(true);
 	         });
 
 		  // login
