@@ -54,7 +54,14 @@ public class CheckOutBooks extends JFrame {
         add(inputPanel, BorderLayout.NORTH);
 
         // Set up the table model and table
-        tableModel = new DefaultTableModel(new Object[]{"OutPut"}, 0);
+        String[] columnNames = {"Copy No.", "Book ISBN", "Checkout Date", "Due Date", "Library Member"};
+        //tableModel = new DefaultTableModel(columnNames, 0);
+        tableModel = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // All cells are non-editable
+            }
+        };
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
@@ -74,10 +81,14 @@ public class CheckOutBooks extends JFrame {
                         system.CheckMemeber(inputText);
                         BookCopy bookcopy=system.CheckAvailability(inputText2);
                         CheckoutEntry checkoutentry=system.PutCheckOutEntry(bookcopy,inputText);
-                        tableModel.addRow(new Object[]{
-                              "Copy No. "+checkoutentry.getBookCopyNumber()+  "of the book: "+checkoutentry.getBookIsbnNumber()+" has been checked out on "+
-                                      checkoutentry.getCheckoutDate() +" until "+checkoutentry.getDueDate()+" for  "+checkoutentry.getLibraryMemberFullName()
-                        });
+//                        tableModel.addRow(new Object[]{
+//                              "Copy No. "+checkoutentry.getBookCopyNumber()+  "of the book: "+checkoutentry.getBookIsbnNumber()+" has been checked out on "+
+//                                      checkoutentry.getCheckoutDate() +" until "+checkoutentry.getDueDate()+" for  "+checkoutentry.getLibraryMemberFullName()
+//                        });
+                        tableModel.addRow(new Object[]{checkoutentry.getBookCopyNumber(),
+                                checkoutentry.getBookIsbnNumber(),
+                                checkoutentry.getCheckoutDate(), checkoutentry.getDueDate(), checkoutentry.getLibraryMemberFullName()});
+
 
                     } catch (BookNotFoundException | MemberNotFoundException | NoBooksCopiesException  ex ) {
                         tableModel.addRow(new Object[]{ex.getMessage()});
