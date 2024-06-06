@@ -5,89 +5,87 @@ import business.SystemController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-public class AddNewMemberWindow extends JFrame {
-
-
-    private boolean isInitialized = false;
-
+public class AddNewMemberWindow extends JPanel {
     SystemController systemController = new SystemController();
-
 
     private JTextField streetField, cityField, stateField,
             zipField, memberIDField, fnameField, lnameField, telField;
     private JButton addButton;
-    private ArrayList<User> users;
 
     public AddNewMemberWindow() {
-        // Initialize the user list
-        users = new ArrayList<>();
+        setSize(600, 400);
+        // Main panel with BoxLayout to hold the two sections
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Set up the frame
-        setTitle("User Form");
-        setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        // Address Panel
+        JPanel addressPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        addressPanel.setBorder(BorderFactory.createTitledBorder("Address Data"));
 
-        // Create panel and layout
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(9, 2));
+        // Address fields
+        JLabel addressLabel = new JLabel("Street:");
+        streetField = new JTextField(25);
 
-        // Add name field
-        panel.add(new JLabel("Street:"));
-        streetField = new JTextField();
-        panel.add(streetField);
+        JLabel cityLabel = new JLabel("City:");
+        cityField = new JTextField(25);
 
-        // Add age field
-        panel.add(new JLabel("city:"));
-        cityField = new JTextField();
-        panel.add(cityField);
+        JLabel stateLabel = new JLabel("State:");
+        stateField = new JTextField(25);
 
-        // Add email field
-        panel.add(new JLabel("state:"));
-        stateField = new JTextField();
-        panel.add(stateField);
+        JLabel zipLabel = new JLabel("ZIP Code:");
+        zipField = new JTextField(25);
 
-        panel.add(new JLabel("zipField:"));
-        zipField = new JTextField();
-        panel.add(zipField);
+        addressPanel.add(addressLabel);
+        addressPanel.add(streetField);
+        addressPanel.add(cityLabel);
+        addressPanel.add(cityField);
+        addressPanel.add(stateLabel);
+        addressPanel.add(stateField);
+        addressPanel.add(zipLabel);
+        addressPanel.add(zipField);
 
-        panel.add(new JLabel("memberID:"));
-        memberIDField = new JTextField();
-        panel.add(memberIDField);
+        // Member Panel
+        JPanel memberPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        memberPanel.setBorder(BorderFactory.createTitledBorder("Member Data"));
 
-        panel.add(new JLabel("First name:"));
-        fnameField = new JTextField();
-        panel.add(fnameField);
+        // Member fields
+        JLabel firstNameLabel = new JLabel("First Name:");
+        fnameField = new JTextField(25);
 
-        panel.add(new JLabel("Last name:"));
-        lnameField = new JTextField();
-        panel.add(lnameField);
+        JLabel lastNameLabel = new JLabel("Last Name:");
+        lnameField = new JTextField(25);
 
-        panel.add(new JLabel("tel:"));
-        telField = new JTextField();
-        panel.add(telField);
+        JLabel emailLabel = new JLabel("MemberID:");
+        memberIDField = new JTextField(25);
 
-        // Add button
-        addButton = new JButton("Add User");
-        panel.add(addButton);
+        JLabel phoneLabel = new JLabel("Tel:");
+        telField = new JTextField(25);
 
-        // Add action listener to the button
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addUser();
-            }
-        });
+        //Button
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BorderLayout(10, 10));
+        JButton addMemberButton = new JButton("Add New Member");
+        buttonPanel.add(addMemberButton, BorderLayout.CENTER);
+        addMemberButton.addActionListener(e -> addUser());
 
-        // Add panel to frame
-        add(panel);
+        memberPanel.add(firstNameLabel);
+        memberPanel.add(fnameField);
+        memberPanel.add(lastNameLabel);
+        memberPanel.add(lnameField);
+        memberPanel.add(emailLabel);
+        memberPanel.add(memberIDField);
+        memberPanel.add(phoneLabel);
+        memberPanel.add(telField);
 
-        // Set frame visibility
-        setVisible(true);
+        // Adding both panels to the main panel
+        mainPanel.add(addressPanel);
+        mainPanel.add(memberPanel);
+        mainPanel.add(addMemberButton);
+
+        // Adding the main panel to the frame
+        add(mainPanel);
     }
 
     private void addUser() {
@@ -125,37 +123,11 @@ public class AddNewMemberWindow extends JFrame {
 
     }
 
+
     public static void main(String[] args) {
-        // Run the form
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new AddNewMemberWindow();
-            }
+        SwingUtilities.invokeLater(() -> {
+            AddNewMemberWindow example = new AddNewMemberWindow();
+            example.setVisible(true);
         });
     }
-
-    // Inner class to represent a user
-    class User {
-        private String name;
-        private int age;
-        private String email;
-
-        public User(String name, int age, String email) {
-            this.name = name;
-            this.age = age;
-            this.email = email;
-        }
-
-        @Override
-        public String toString() {
-            return "User{" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    ", email='" + email + '\'' +
-                    '}';
-        }
-    }
-
-
 }

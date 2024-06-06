@@ -79,9 +79,7 @@ public class AdminDashboard extends JFrame {
 
         // Add right panel and button panel into a container
         JPanel rightContainer = new JPanel(new BorderLayout());
-        rightContainer.add(new AddressAndMemberPanelExample(), BorderLayout.CENTER);
-        rightContainer.add(buttonPanel, BorderLayout.SOUTH);
-
+        rightContainer.add(new AddNewMemberWindow(), BorderLayout.CENTER);
         // Split pane
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightContainer);
         splitPane.setDividerSize(0);
