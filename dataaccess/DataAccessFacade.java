@@ -6,8 +6,10 @@ import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import business.Book;
 import business.BookCopy;
@@ -144,5 +146,30 @@ public class DataAccessFacade implements DataAccess {
 		}
 		private static final long serialVersionUID = 5399827794066637059L;
 	}
-	
+
+
+
+	// New methods
+
+	public void addBook(Book book) {
+		List<Book> books = new ArrayList<>();
+		HashMap<String,Book> readBooksMap = readBooksMap();
+		//List<book>
+		//da.loadBookMap(List<book>)
+		books = (List<Book>)ConvertHashMapToList(readBooksMap);
+		books.add(book);
+		DataAccessFacade.loadBookMap(books);
+		//return books;
+	}
+
+	private List<?> ConvertHashMapToList(HashMap<String,? extends Object> hashmap)
+	{
+		List<Object> list = new ArrayList<>();
+		for (Map.Entry<String, ? extends Object> set :
+				hashmap.entrySet()) {
+			list.add(set.getValue());
+		}
+
+		return list;
+	}
 }

@@ -1,6 +1,6 @@
 package librarysystem;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
@@ -25,7 +25,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	JPanel mainPanel;
 	JMenuBar menuBar;
     JMenu options;
-    JMenuItem login, allBookIds, allMemberIds; 
+    JMenuItem login, allBookIds, allMemberIds,addBook;
     String pathToImage;
     private boolean isInitialized = false;
     
@@ -33,7 +33,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
     	LibrarySystem.INSTANCE,
 		LoginWindow.INSTANCE,
 		AllMemberIdsWindow.INSTANCE,	
-		AllBookIdsWindow.INSTANCE
+		AllBookIdsWindow.INSTANCE,
+		AddBookWindow.INSTANCE
 	};
     	
 	public static void hideAllWindows() {		
@@ -86,9 +87,12 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   allBookIds.addActionListener(new AllBookIdsListener());
  	   allMemberIds = new JMenuItem("All Member Ids");
  	   allMemberIds.addActionListener(new AllMemberIdsListener());
+		addBook = new JMenuItem("Add Book");
+		addBook.addActionListener(new AddBookListener());
  	   options.add(login);
  	   options.add(allBookIds);
  	   options.add(allMemberIds);
+		options.add(addBook);
     }
     
     class LoginListener implements ActionListener {
@@ -103,6 +107,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		}
     	
     }
+
+
     class AllBookIdsListener implements ActionListener {
 
 		@Override
@@ -157,6 +163,31 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		}
     	
     }
+
+
+	class AddBookListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			AddBookWindow.INSTANCE.init();
+
+			//List<String> ids = ci.allBookIds();
+			//Collections.sort(ids);
+			//StringBuilder sb = new StringBuilder();
+			//for(String s: ids) {
+			//	sb.append(s + "\n");
+			//}
+			//System.out.println(sb.toString());
+			//AddBookWindow.INSTANCE.setData(sb.toString());
+			AddBookWindow.INSTANCE.pack();
+			//AddBookWindow.INSTANCE.setSize(660,500);
+			Util.centerFrameOnDesktop(AddBookWindow.INSTANCE);
+			AddBookWindow.INSTANCE.setVisible(true);
+
+		}
+
+	}
 
 	@Override
 	public boolean isInitialized() {
