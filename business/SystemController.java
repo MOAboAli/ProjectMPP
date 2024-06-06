@@ -3,6 +3,7 @@ package business;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dataaccess.Auth;
 import dataaccess.DataAccess;
@@ -40,6 +41,13 @@ public class SystemController implements ControllerInterface {
 		retval.addAll(da.readBooksMap().keySet());
 		return retval;
 	}
-	
-	
+
+	@Override
+	public void addBook(Book book) {
+		List<Book> books = new ArrayList<>();
+		DataAccess da = new DataAccessFacade();
+		da.addBook(book);
+	}
+
+
 }
