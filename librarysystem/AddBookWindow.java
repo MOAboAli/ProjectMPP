@@ -3,6 +3,7 @@ package librarysystem;
 import business.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +38,11 @@ public class AddBookWindow extends JFrame implements LibWindow  {
     private JButton addButton;
 
 
+
+
     private List<Author> authors;
+    private DefaultTableModel authorTableModel;
+
 
 
     public AddBookWindow()
@@ -45,7 +50,7 @@ public class AddBookWindow extends JFrame implements LibWindow  {
         this.authors = new ArrayList<>();
 
         setTitle("Add Book");
-        setSize(400, 600);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -64,11 +69,28 @@ public class AddBookWindow extends JFrame implements LibWindow  {
         addAuthorButton = new JButton("Add Author");
         addButton = new JButton("Add Book");
 
-        JPanel panel = new JPanel(new GridLayout(14, 2, 5, 5));  // 14 rows, 2 columns, 5px gaps
+
+        String[] columnNames = {"First Name", "Last Name", "Telephone", "Bio", "Street", "City", "State", "Zip"};
+        authorTableModel = new DefaultTableModel(columnNames, 0);
+        JTable authorTable = new JTable(authorTableModel);
+
+        mainPanel = new JPanel(new BorderLayout(5, 5));
+
+
+        JPanel panel = new JPanel(new GridLayout(15, 2, 5, 5));  // 14 rows, 2 columns, 5px gaps
         panel.add(new JLabel("ISBN:"));
         panel.add(isbnField);
         panel.add(new JLabel("Title:"));
         panel.add(titleField);
+        panel.add(new JLabel("Max Checkout Length:"));
+        panel.add(maxCheckoutLengthField);
+        panel.add(new JLabel("Number of Copies:"));
+        panel.add(numberOfCopiesField);
+
+        panel.add(new JLabel(""));
+        panel.add(new JLabel(""));
+
+        //Author form
         panel.add(new JLabel("Author First Name:"));
         panel.add(authorFirstNameField);
         panel.add(new JLabel("Author Last Name:"));
@@ -87,14 +109,31 @@ public class AddBookWindow extends JFrame implements LibWindow  {
         panel.add(addressZipField);
         panel.add(new JLabel(""));
         panel.add(addAuthorButton);
-        panel.add(new JLabel("Max Checkout Length:"));
-        panel.add(maxCheckoutLengthField);
-        panel.add(new JLabel("Number of Copies:"));
-        panel.add(numberOfCopiesField);
+
+        //panel.add(new JLabel(""));
+        //panel.add(new JScrollPane(authorTable));
+
+
+        panel.add(new JLabel(""));
+        panel.add(new JLabel(""));
+
         panel.add(new JLabel(""));
         panel.add(addButton);
 
-        add(panel);
+
+        // Panel for the authors table
+        JPanel tablePanel = new JPanel(new BorderLayout());
+        tablePanel.add(new JScrollPane(authorTable), BorderLayout.CENTER);
+
+        mainPanel.add(panel, BorderLayout.WEST);
+        mainPanel.add(tablePanel, BorderLayout.CENTER);
+
+        add(mainPanel);
+
+
+
+        //add(panel);
+        //add(tablePanel);
 
         addAuthorButton.addActionListener(new ActionListener() {
             @Override
@@ -137,6 +176,12 @@ public class AddBookWindow extends JFrame implements LibWindow  {
         String zip = addressZipField.getText();
         Address address = new Address(street, city, state, zip);
         authors.add(new Author(firstName, lastName, telephone, address, bio));
+
+        authorTableModel.addRow(new Object[]{
+                firstName, lastName, telephone, bio, street, city, state, zip
+        });
+
+
         JOptionPane.showMessageDialog(this, "Author added: " + firstName + " " + lastName);
         authorFirstNameField.setText("");
         authorLastNameField.setText("");
@@ -146,6 +191,7 @@ public class AddBookWindow extends JFrame implements LibWindow  {
         addressCityField.setText("");
         addressStateField.setText("");
         addressZipField.setText("");
+
     }
 
     private void addBook() {
@@ -165,6 +211,7 @@ public class AddBookWindow extends JFrame implements LibWindow  {
         maxCheckoutLengthField.setText("");
         numberOfCopiesField.setText("");
         authors.clear();
+        authorTableModel.setRowCount(0);  // Clear the table
     }
 
 
