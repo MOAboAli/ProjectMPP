@@ -1,13 +1,16 @@
 package business;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
+import Exception.BookNotFoundException;
+import Exception.MemberNotFoundException;
+import Exception.NoBooksCopiesException;
 import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
+
 
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
@@ -40,6 +43,50 @@ public class SystemController implements ControllerInterface {
 		retval.addAll(da.readBooksMap().keySet());
 		return retval;
 	}
-	
+
+	//////////////////////Book Check Out///////////////////////////
+
+	public void CheckBook(String BookISBN) throws BookNotFoundException {
+		if( !allBookIds().contains(BookISBN))
+			throw new BookNotFoundException();
+	}
+
+	public void CheckMemeber(String MemberID) throws MemberNotFoundException {
+		if( ! allMemberIds().contains(MemberID))
+			throw new MemberNotFoundException();
+	}
+
+	public BookCopy CheckAvailability(String BookID) throws NoBooksCopiesException {
+		DataAccessFacade DataAccess =new DataAccessFacade();
+		HashMap<String,Book> books = DataAccess. readBooksMap();
+		Book book = books.get(BookID);
+		if(book == null)
+			throw new NoBooksCopiesException();
+		return book.getNextAvailableCopy();
+	}
+
+
+	public CheckoutEntry PutCheckOutEntry(BookCopy bookcopy,String MemberID) throws MemberNotFoundException {
+
+		DataAccessFacade DataAccess =new DataAccessFacade();
+		HashMap<String, CheckoutRecord> Records = DataAccess.readCheckoutRecord();
+		CheckoutRecord checkoutrecord = Records.get(MemberID);
+		if(checkoutrecord == null){
+			LibraryMember member = DataAccess.readMemberMap().get(MemberID);
+			if(member == null)
+				throw  new MemberNotFoundException();
+			checkoutrecord = new CheckoutRecord(member);
+		}
+
+		CheckoutEntry checkoutentry = new CheckoutEntry(LocalDate.now(),bookcopy,checkoutrecord);
+		checkoutrecord.addCheckoutEntry(checkoutentry);
+		DataAccess.saveNewCheckRecord(checkoutrecord);
+		DataAccess.saveNewCheckEntry(checkoutentry);
+		return checkoutentry;
+	}
+
+
+
+
 	
 }

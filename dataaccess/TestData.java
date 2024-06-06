@@ -1,13 +1,12 @@
 package dataaccess;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
-import business.Address;
-import business.Author;
-import business.Book;
-import business.LibraryMember;
+import business.*;
 
 /**
  * This class loads data into the data repository and also
@@ -20,8 +19,8 @@ import business.LibraryMember;
  *
  */
 public class TestData {
-	
-	
+
+
 	public static void main(String[] args) {
 		TestData td = new TestData();
 		td.bookData();
@@ -30,6 +29,7 @@ public class TestData {
 		DataAccess da = new DataAccessFacade();
 		System.out.println(da.readBooksMap());
 		System.out.println(da.readUserMap());
+		td.checkInitfiles();
 	}
 	///create books
 	public void bookData() {
@@ -61,7 +61,23 @@ public class TestData {
 		
 		DataAccessFacade.loadMemberMap(members);	
 	}
-	
+
+	public void checkInitfiles(){
+
+		DataAccessFacade DataAccess =new DataAccessFacade();
+
+			CheckoutRecord initCheckoutRecord = new CheckoutRecord(members.get(0));
+			CheckoutEntry checkoutentry = new CheckoutEntry(LocalDate.now(), allBooks.get(0).getCopy(0), initCheckoutRecord);
+			List<CheckoutEntry> List =new ArrayList<>();
+			List.add(checkoutentry);
+			List<CheckoutRecord> List2 =new ArrayList<>();
+			List2.add(initCheckoutRecord);
+			DataAccessFacade.loadCheckoutEntryMap(List);
+			DataAccessFacade.loadCheckoutRecordMap(List2);
+
+
+	}
+
 	///////////// DATA //////////////
 	List<LibraryMember> members = new ArrayList<LibraryMember>();
 	@SuppressWarnings("serial")
@@ -107,4 +123,8 @@ public class TestData {
 			add(new User("103", "111", Auth.BOTH));
 		}
 	};
+
+
+
+
 }
