@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CheckOutBooksWindow extends JFrame {
+public class CheckOutBooksWindow extends JPanel {
 
 
     private JTextField textField;
@@ -22,11 +22,11 @@ public class CheckOutBooksWindow extends JFrame {
 
     public CheckOutBooksWindow() {
         // Set up the JFrame
-        setTitle("Check Out Books");
-        setSize(1024, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
+        //setTitle("Check Out Books");
+        //setSize(1024, 500);
+        // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
         // Create a JPanel for the input components
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new FlowLayout());
@@ -51,7 +51,7 @@ public class CheckOutBooksWindow extends JFrame {
         inputPanel.add(button);
 
         // Add the input panel to the top of the frame
-        add(inputPanel, BorderLayout.NORTH);
+        add(inputPanel, BorderLayout.PAGE_START);
 
         // Set up the table model and table
         String[] columnNames = {"Copy No.", "Book ISBN", "Checkout Date", "Due Date", "Library Member"};
@@ -81,10 +81,6 @@ public class CheckOutBooksWindow extends JFrame {
                         system.CheckMemeber(inputText);
                         BookCopy bookcopy=system.CheckAvailability(inputText2);
                         CheckoutEntry checkoutentry=system.PutCheckOutEntry(bookcopy,inputText);
-//                        tableModel.addRow(new Object[]{
-//                              "Copy No. "+checkoutentry.getBookCopyNumber()+  "of the book: "+checkoutentry.getBookIsbnNumber()+" has been checked out on "+
-//                                      checkoutentry.getCheckoutDate() +" until "+checkoutentry.getDueDate()+" for  "+checkoutentry.getLibraryMemberFullName()
-//                        });
                         tableModel.addRow(new Object[]{checkoutentry.getBookCopyNumber(),
                                 checkoutentry.getBookIsbnNumber(),
                                 checkoutentry.getCheckoutDate(), checkoutentry.getDueDate(), checkoutentry.getLibraryMemberFullName()});
@@ -98,16 +94,6 @@ public class CheckOutBooksWindow extends JFrame {
                     tableModel.addRow(new Object[]{"Fields Can't be Empty......................."});
 
                 }
-            }
-        });
-    }
-
-    public static void main(String[] args) {
-        // Run the Swing application on the Event Dispatch Thread
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new CheckOutBooksWindow().setVisible(true);
             }
         });
     }

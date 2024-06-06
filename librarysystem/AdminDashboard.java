@@ -5,11 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 
 public class AdminDashboard extends JFrame {
 
-    public final static int WIDTH = 800;
-    public final static int HEIGHT = 600;
+    public final static int WIDTH = 1024;
+    public final static int HEIGHT = 800;
+    JPanel rightPanel ;
+    JPanel rightContainer;
 
     public AdminDashboard() {
         // Frame settings
@@ -34,10 +37,16 @@ public class AdminDashboard extends JFrame {
         leftPanel.add(adminLabel);
 
         // Add navigation buttons
-        String[] navItems = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"};
-        for (String item : navItems) {
-            JButton button = createCustomButton(item, "", new Font("Roboto Mono", Font.PLAIN, 12), e -> {
-                System.out.println(item + " clicked");
+        HashMap<String, JPanel> navItems = new HashMap<>();
+        navItems.put("Book Check Out", new CheckOutBooksWindow());
+        navItems.put("Item 1", null);
+        navItems.put("Item 2", null);
+        navItems.put("Item 3", null);
+
+        for (HashMap.Entry<String, JPanel> item : navItems.entrySet()) {
+            JButton button = createCustomButton(item.getKey(), "", new Font("Roboto Mono", Font.PLAIN, 12), e -> {
+                System.out.println( item.getKey() + " clicked");
+                updateRightPanel( item.getValue());
             });
             button.setAlignmentX(Component.LEFT_ALIGNMENT);
             leftPanel.add(button);
@@ -53,10 +62,10 @@ public class AdminDashboard extends JFrame {
         leftPanel.add(settingsLabel);
 
         // Right panel for user form
-        JPanel rightPanel = new JPanel();
+        rightPanel = new JPanel();
         rightPanel.setBackground(Color.white);
-        rightPanel.setLayout(new GridLayout(7, 2, 10, 10));
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        //rightPanel.setLayout(new GridLayout(7, 2, 10, 10));
+        //rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Add form fields
         String[] labels = {"Tag ID", "Neptun", "Név", "Könyvek száma", "Email", "Összes díj"};
@@ -78,8 +87,8 @@ public class AdminDashboard extends JFrame {
 
 
         // Add right panel and button panel into a container
-        JPanel rightContainer = new JPanel(new BorderLayout());
-        rightContainer.add(new AddNewMemberWindow(), BorderLayout.CENTER);
+        rightContainer = new JPanel(new BorderLayout());
+        rightContainer.add(new AddNewMemberWindow(), BorderLayout.BEFORE_FIRST_LINE);
         // Split pane
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightContainer);
         splitPane.setDividerSize(0);
@@ -133,5 +142,12 @@ public class AdminDashboard extends JFrame {
                 new AdminDashboard();
             }
         });
+    }
+
+    private void updateRightPanel(JPanel newPanel) {
+        rightContainer.removeAll(); // Remove current panel
+        rightContainer.add(newPanel, BorderLayout.CENTER); // Add new panel
+        rightContainer.revalidate(); // Revalidate the container
+        rightContainer.repaint(); // Repaint the container
     }
 }
