@@ -8,12 +8,12 @@ import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class LoginScreen extends JFrame {
+public class LoginTempScreen extends JFrame {
 
     public final static int WIDTH = 1024;
     public final static int HEIGHT = 720;
 
-    public LoginScreen() {
+    public LoginTempScreen() {
         setTitle("Login Screen");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -149,7 +149,7 @@ public class LoginScreen extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            LoginScreen loginScreen = new LoginScreen();
+            LoginTempScreen loginScreen = new LoginTempScreen();
             loginScreen.setVisible(true);
         });
     }
