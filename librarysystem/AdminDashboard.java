@@ -6,10 +6,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class AdminDashboard extends JFrame {
+public class AdminDashboard extends JFrame implements  LibWindow {
 
     public final static int WIDTH = 800;
     public final static int HEIGHT = 600;
+
+    public final static AdminDashboard INSTANCE =new AdminDashboard();
+
 
     public AdminDashboard() {
         // Frame settings
@@ -133,5 +136,20 @@ public class AdminDashboard extends JFrame {
                 new AdminDashboard();
             }
         });
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public boolean isInitialized() {
+        return false;
+    }
+
+    @Override
+    public void isInitialized(boolean val) {
+
     }
 }
