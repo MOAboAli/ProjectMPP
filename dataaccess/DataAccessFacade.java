@@ -181,7 +181,7 @@ public class DataAccessFacade implements DataAccess {
 		//return books;
 	}
 
-	private List<?> ConvertHashMapToList(HashMap<String,? extends Object> hashmap)
+	public static List<?> ConvertHashMapToList(HashMap<String,? extends Object> hashmap)
 	{
 		List<Object> list = new ArrayList<>();
 		for (Map.Entry<String, ? extends Object> set :
