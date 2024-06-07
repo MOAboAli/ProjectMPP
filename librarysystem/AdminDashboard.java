@@ -21,6 +21,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
     private JButton selectedButton;
     JPanel rightPanel;
     JPanel rightContainer;
+    JPanel leftNavPanel;
 
     public final static AdminDashboard INSTANCE =new AdminDashboard();
 
@@ -57,7 +58,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         leftPanel.setPreferredSize(new Dimension(WIDTH * 40 / 100, getHeight()));
         leftPanel.setBackground(Color.LIGHT_GRAY);
         leftPanel.setLayout(new BorderLayout(10, 10));
-        JPanel leftNavPanel = new JPanel();
+        leftNavPanel = new JPanel();
 
         leftNavPanel.setLayout(new GridLayout(9, 1));
         leftNavPanel.setPreferredSize(new Dimension(WIDTH * 40 / 100, getHeight()));
@@ -71,33 +72,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         adminLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftNavPanel.add(adminLabel);
 
-        // Add navigation buttons
-        HashMap<String, JPanel> navItems = new HashMap<>();
-        navItems.put("Book Check Out", new CheckOutBooksWindow());
-        navItems.put("New Member", new AddNewMemberWindow());
-        navItems.put("Add Book", new AddBookWindow());
-        navItems.put("Check overDue", new OverDueBooksWindow());
-        navItems.put("Check Member Records", new CheckOutRecordWindow());
-
-        for (HashMap.Entry<String, JPanel> item : navItems.entrySet()) {
-            JButton button = createCustomButton(item.getKey(), "", new Font("Roboto Mono", Font.PLAIN, 12));
-            button.addActionListener(e -> {
-                if (selectedButton != null) {
-                    selectedButton.setForeground(Color.BLACK); // Change text color back to normal
-                    selectedButton.setBorderPainted(false); // Hide border
-                    selectedButton.setOpaque(false); // Make background transparent
-                    selectedButton.setBackground(null); // Reset background
-                }
-                selectedButton = button;
-                button.setForeground(Color.WHITE); // Change text color on hover
-                button.setOpaque(true); // Make background opaque
-                button.setBackground(Color.GRAY);
-                if (item.getValue() != null)
-                    updateRightPanel(item.getValue());
-            });
-            button.setAlignmentX(Component.LEFT_ALIGNMENT);
-            leftNavPanel.add(button);
-        }
+        menuAdjust();
 
         // Add settings icon
         JButton settingsLabel = createCustomButton("Logout", Utils.assets_dir + "logout.png", new Font("Roboto Mono", Font.PLAIN, 12));
@@ -133,6 +108,48 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         setVisible(true);
         LibrarySystem.getLoginWindow().closeWnidow();
 
+    }
+
+    private void menuAdjust(){
+        // Add navigation buttons
+        HashMap<String, JPanel> navItems = new HashMap<>();
+
+        //Admin
+        navItems.put("New Member", new AddNewMemberWindow());
+        navItems.put("Add Book", new AddBookWindow());
+
+
+
+
+        //Librarian
+        navItems.put("Book Check Out", new CheckOutBooksWindow());
+        navItems.put("Check Member Records", new CheckOutRecordWindow());
+        navItems.put("Check overDue", new OverDueBooksWindow());
+
+
+
+
+
+
+        for (HashMap.Entry<String, JPanel> item : navItems.entrySet()) {
+            JButton button = createCustomButton(item.getKey(), "", new Font("Roboto Mono", Font.PLAIN, 12));
+            button.addActionListener(e -> {
+                if (selectedButton != null) {
+                    selectedButton.setForeground(Color.BLACK); // Change text color back to normal
+                    selectedButton.setBorderPainted(false); // Hide border
+                    selectedButton.setOpaque(false); // Make background transparent
+                    selectedButton.setBackground(null); // Reset background
+                }
+                selectedButton = button;
+                button.setForeground(Color.WHITE); // Change text color on hover
+                button.setOpaque(true); // Make background opaque
+                button.setBackground(Color.GRAY);
+                if (item.getValue() != null)
+                    updateRightPanel(item.getValue());
+            });
+            button.setAlignmentX(Component.LEFT_ALIGNMENT);
+            leftNavPanel.add(button);
+        }
     }
 
     private JButton createCustomButton(String text, String iconPath, Font font) {
