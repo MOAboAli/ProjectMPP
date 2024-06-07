@@ -4,6 +4,10 @@ import utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
 public class AdminDashboard extends JFrame implements  LibWindow {
@@ -31,6 +35,8 @@ public class AdminDashboard extends JFrame implements  LibWindow {
 
         // Left panel for navigation
         JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new GridLayout(9, 1));
+        leftPanel.setPreferredSize(new Dimension(WIDTH * 40 / 100, getHeight()));
         leftPanel.setBackground(Color.LIGHT_GRAY);
         leftPanel.setLayout(new BorderLayout(10, 10));
         JPanel leftNavPanel = new JPanel();
@@ -53,6 +59,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         navItems.put("New Member", new AddNewMemberWindow());
         navItems.put("Add Book", new AddBookWindow());
         navItems.put("Check overDue", new OverDueBooksWindow());
+        navItems.put("Check Member Records", new CheckOutRecordWindow());
 
         for (HashMap.Entry<String, JPanel> item : navItems.entrySet()) {
             JButton button = createCustomButton(item.getKey(), "", new Font("Roboto Mono", Font.PLAIN, 12));
@@ -104,7 +111,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         button.setFont(font); // Set custom font
         button.setContentAreaFilled(false); // Remove button background
         button.setBorderPainted(false); // Remove button border
-        button.setFocusPainted(false);
+        button.setFocusPainted(false); // Remove focus painted border
         button.setOpaque(false);
         ImageIcon originalIcon = new ImageIcon(iconPath);
         Image scaledImage = originalIcon.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);

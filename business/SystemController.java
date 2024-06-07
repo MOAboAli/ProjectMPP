@@ -1,6 +1,12 @@
 package business;
 
 import Exception.AddNewMemberException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
 import Exception.BookNotFoundException;
 import Exception.MemberNotFoundException;
 import Exception.NoBooksCopiesException;
@@ -16,7 +22,7 @@ import java.util.List;
 
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
-	
+    DataAccessFacade DataAccess =new DataAccessFacade();
 	public void login(String id, String password) throws LoginException {
 		DataAccess da = new DataAccessFacade();
 		HashMap<String, User> map = da.readUserMap();
@@ -79,9 +85,10 @@ public class SystemController implements ControllerInterface {
             throw new BookNotFoundException();
     }
 
-    public void CheckMemeber(String MemberID) throws MemberNotFoundException {
+    public LibraryMember CheckMemeber(String MemberID) throws MemberNotFoundException {
         if( ! allMemberIds().contains(MemberID))
             throw new MemberNotFoundException();
+        return DataAccess.readMemberMap().get(MemberID);
     }
 
     public BookCopy CheckAvailability(String BookID) throws NoBooksCopiesException {
@@ -95,26 +102,34 @@ public class SystemController implements ControllerInterface {
         return book.getNextAvailableCopy();
     }
 
-
-    public CheckoutEntry PutCheckOutEntry(BookCopy bookcopy,String MemberID) throws MemberNotFoundException {
-
-        DataAccessFacade DataAccess =new DataAccessFacade();
-        HashMap<String, CheckoutRecord> Records = DataAccess.readCheckoutRecord();
-        CheckoutRecord checkoutrecord = Records.get(MemberID);
-        if(checkoutrecord == null){
-            LibraryMember member = DataAccess.readMemberMap().get(MemberID);
-            if(member == null)
-                throw  new MemberNotFoundException();
-            checkoutrecord = new CheckoutRecord(member);
-        }
+    public CheckoutEntry PutCheckOutEntry(BookCopy bookcopy,LibraryMember Member) throws MemberNotFoundException {
+        CheckoutRecord checkoutrecord = DataAccess.readCheckoutRecord().get(Member.getMemberId());
+        if(checkoutrecord == null)
+            checkoutrecord = new CheckoutRecord(Member);
 
         CheckoutEntry checkoutentry = new CheckoutEntry(LocalDate.now(),bookcopy,checkoutrecord);
         checkoutrecord.addCheckoutEntry(checkoutentry);
-        DataAccess.saveNewCheckRecord(checkoutrecord);
-        DataAccess.saveNewCheckEntry(checkoutentry);
         bookcopy.changeAvailability();
+
+        DataAccess.saveNewCheckRecord(checkoutrecord);
         DataAccess.saveNewBook(bookcopy.getBook());
         return checkoutentry;
     }
-	
+
+    ////////////////////// Member CheckOuts ///////////////////////////
+
+    public CheckoutRecord getRecordByEmpId(String MemberID){
+        return new DataAccessFacade().readCheckoutRecord().get(MemberID);
+
+    }
+
+    public List<CheckoutEntry> getAllCheckOutRecord(){
+        List<CheckoutEntry> Entry = new ArrayList<>();
+        new DataAccessFacade().readCheckoutRecord().values().forEach(a-> Entry.addAll(a.getCheckoutEntries()));
+        return Entry;
+
+    }
+
+
+
 }

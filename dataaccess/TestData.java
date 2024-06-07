@@ -64,15 +64,15 @@ public class TestData {
 
 	public void checkInitfiles(){
 
-		DataAccessFacade DataAccess =new DataAccessFacade();
-
+			DataAccessFacade DataAccess =new DataAccessFacade();
 			CheckoutRecord initCheckoutRecord = new CheckoutRecord(members.get(0));
-			CheckoutEntry checkoutentry = new CheckoutEntry(LocalDate.now(), allBooks.get(0).getCopy(0), initCheckoutRecord);
+			CheckoutEntry checkoutentry = new CheckoutEntry(LocalDate.now(), allBooks.get(0).getNextAvailableCopy(), initCheckoutRecord);
+
 			List<CheckoutEntry> List =new ArrayList<>();
 			List.add(checkoutentry);
 			List<CheckoutRecord> List2 =new ArrayList<>();
 			List2.add(initCheckoutRecord);
-			DataAccessFacade.loadCheckoutEntryMap(List);
+
 			DataAccessFacade.loadCheckoutRecordMap(List2);
 
 
