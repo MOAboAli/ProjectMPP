@@ -1,24 +1,12 @@
 package librarysystem;
 
-import java.awt.*;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JSplitPane;
-
 import business.ControllerInterface;
 import business.LoginException;
 import business.SystemController;
 import dataaccess.User;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class LoginWindow extends JFrame implements LibWindow {
 	public static  LoginWindow INSTANCE = new LoginWindow();
@@ -212,32 +200,23 @@ public class LoginWindow extends JFrame implements LibWindow {
 		});
 	}
 
-	private void addLoginButtonListener(JButton butn) {
-		butn.addActionListener(evt -> {
-			try {
-				User user = ci.login(username.getText(), password.getText());
-				//JOptionPane.showMessageDialog(this, "Successful Login");
+    private void addLoginButtonListener(JButton butn) {
+        butn.addActionListener(evt -> {
+            try {
+                User user = ci.login(username.getText(), password.getText());
+                AdminDashboard adminDashboard = new AdminDashboard();
+                adminDashboard.setTitle("Library Application");
+                adminDashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                adminDashboard.setUser(user);
+                adminDashboard.init();
+                centerFrameOnDesktop(adminDashboard);
+                adminDashboard.setVisible(true);
 
-				EventQueue.invokeLater(() ->
-				{
-					AdminDashboard.INSTANCE.setTitle("Library Application");
-					AdminDashboard.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					AdminDashboard.INSTANCE.setUser(user);
-					AdminDashboard.INSTANCE.init();
-					centerFrameOnDesktop(AdminDashboard.INSTANCE);
-					AdminDashboard.INSTANCE.setVisible(true);
-
-
-
-					//LibrarySystem.getLoginWindow().setVisible(true);
-
-				});
-
-			} catch (LoginException ex) {
-				JOptionPane.showMessageDialog(this, ex.getMessage());
-			}
-		});
-	}
+            } catch (LoginException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        });
+    }
 
 	public static void centerFrameOnDesktop(Component f) {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -248,8 +227,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 		f.setLocation(((width - frameWidth) / 2), (height - frameHeight) / 3);
 	}
 
-	public void closeWindow()
-	{
-		INSTANCE.dispose();
-	}
+    public void closeWindow() {
+        INSTANCE.dispose();
+    }
 }
