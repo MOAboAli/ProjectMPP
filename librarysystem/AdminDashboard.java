@@ -4,6 +4,8 @@ import utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class AdminDashboard extends JFrame implements  LibWindow {
@@ -20,7 +22,45 @@ public class AdminDashboard extends JFrame implements  LibWindow {
 
 
     public AdminDashboard() {
-        // Frame settings
+
+    }
+
+    private JButton createCustomButton(String text, String iconPath, Font font) {
+        JButton button = new JButton(text);
+        button.setFont(font); // Set custom font
+        button.setContentAreaFilled(false); // Remove button background
+        button.setBorderPainted(false); // Remove button border
+        button.setFocusPainted(false);
+        button.setOpaque(false);
+        ImageIcon originalIcon = new ImageIcon(iconPath);
+        Image scaledImage = originalIcon.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        button.setIcon(scaledIcon);
+        button.setIconTextGap(8);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Set cursor to hand
+        return button;
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                AdminDashboard admin = new AdminDashboard();
+                admin.init();
+            }
+        });
+    }
+
+    private void updateRightPanel(JPanel newPanel) {
+        rightContainer.removeAll(); // Remove current panel
+        rightContainer.add(newPanel, BorderLayout.CENTER); // Add new panel
+        rightContainer.revalidate(); // Revalidate the container
+        rightContainer.repaint(); // Repaint the container
+    }
+
+    @Override
+    public void init() {
+// Frame settings
         setTitle("Admin Dashboard");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,6 +117,15 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         // Add settings icon
         JButton settingsLabel = createCustomButton("Logout", Utils.assets_dir + "logout.png", new Font("Roboto Mono", Font.PLAIN, 12));
         settingsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        settingsLabel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                LoginWindow.initialize();
+                 LoginWindow.INSTANCE.init();
+                 LoginWindow.INSTANCE.setVisible(true);
+            }
+        });
 
         leftPanel.add(settingsLabel, BorderLayout.SOUTH);
 
@@ -97,43 +146,8 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         add(splitPane, BorderLayout.CENTER);
 
         setVisible(true);
-    }
 
-    private JButton createCustomButton(String text, String iconPath, Font font) {
-        JButton button = new JButton(text);
-        button.setFont(font); // Set custom font
-        button.setContentAreaFilled(false); // Remove button background
-        button.setBorderPainted(false); // Remove button border
-        button.setFocusPainted(false);
-        button.setOpaque(false);
-        ImageIcon originalIcon = new ImageIcon(iconPath);
-        Image scaledImage = originalIcon.getImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        button.setIcon(scaledIcon);
-        button.setIconTextGap(8);
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Set cursor to hand
-        return button;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new AdminDashboard();
-            }
-        });
-    }
-
-    private void updateRightPanel(JPanel newPanel) {
-        rightContainer.removeAll(); // Remove current panel
-        rightContainer.add(newPanel, BorderLayout.CENTER); // Add new panel
-        rightContainer.revalidate(); // Revalidate the container
-        rightContainer.repaint(); // Repaint the container
-    }
-
-    @Override
-    public void init() {
-
+        LibrarySystem.getLoginWindow().closeWnidow();
     }
 
     @Override
@@ -144,5 +158,10 @@ public class AdminDashboard extends JFrame implements  LibWindow {
     @Override
     public void isInitialized(boolean val) {
 
+    }
+
+    @Override
+    public void closeWnidow() {
+        INSTANCE.dispose();
     }
 }

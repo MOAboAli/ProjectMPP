@@ -21,6 +21,11 @@ public class LoginTempWindow extends JFrame implements LibWindow {
 
     }
 
+    @Override
+    public void closeWnidow() {
+
+    }
+
 
     public LoginTempWindow() {
         // Set up the frame

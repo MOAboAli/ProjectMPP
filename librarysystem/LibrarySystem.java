@@ -214,5 +214,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		isInitialized =val;
 		
 	}
-    
+
+	@Override
+	public void closeWnidow() {
+
+	}
+
 }

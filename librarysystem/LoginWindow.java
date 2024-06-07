@@ -20,7 +20,7 @@ import business.LoginException;
 import business.SystemController;
 
 public class LoginWindow extends JFrame implements LibWindow {
-	public static final LoginWindow INSTANCE = new LoginWindow();
+	public static  LoginWindow INSTANCE = new LoginWindow();
 	ControllerInterface ci = new SystemController();
 
 	private boolean isInitialized = false;
@@ -51,6 +51,11 @@ public class LoginWindow extends JFrame implements LibWindow {
 		isInitialized = val;
 	}
 
+	@Override
+	public void closeWnidow() {
+		INSTANCE.dispose();
+	}
+
 	private JTextField messageBar = new JTextField();
 
 	public void clear() {
@@ -59,6 +64,10 @@ public class LoginWindow extends JFrame implements LibWindow {
 
 	/* This class is a singleton */
 	private LoginWindow() {}
+
+	public static void initialize() {
+		INSTANCE = new LoginWindow();
+	}
 
 	public void init() {
 		mainPanel = new JPanel();
@@ -235,5 +244,10 @@ public class LoginWindow extends JFrame implements LibWindow {
 		int frameHeight = f.getSize().height;
 		int frameWidth = f.getSize().width;
 		f.setLocation(((width - frameWidth) / 2), (height - frameHeight) / 3);
+	}
+
+	public void closeWindow()
+	{
+		INSTANCE.dispose();
 	}
 }
