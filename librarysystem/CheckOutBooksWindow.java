@@ -1,10 +1,12 @@
 package librarysystem;
-import business.BookCopy;
-import business.CheckoutEntry;
-import business.SystemController;
+
 import Exception.BookNotFoundException;
 import Exception.MemberNotFoundException;
 import Exception.NoBooksCopiesException;
+import business.BookCopy;
+import business.CheckoutEntry;
+import business.SystemController;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -66,7 +68,7 @@ public class CheckOutBooksWindow extends JPanel {
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
-        system.getAllCheckOutEntry().forEach(checkoutentry -> {
+        system.getAllCheckOutRecord().forEach(checkoutentry -> {
             tableModel.addRow(new Object[]{
                     checkoutentry.getBookCopyNumber(),
                     checkoutentry.getBookIsbnNumber()+" " +checkoutentry.getBookCopy().getBook().getTitle(),
