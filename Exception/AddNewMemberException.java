@@ -1,4 +1,4 @@
-package business;
+package Exception;
 
 import java.io.Serializable;
 

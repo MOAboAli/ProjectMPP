@@ -1,6 +1,6 @@
 package librarysystem;
 
-import business.AddNewMemberException;
+import Exception.AddNewMemberException;
 import business.SystemController;
 
 import javax.swing.*;

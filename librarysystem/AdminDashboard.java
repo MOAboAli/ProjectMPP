@@ -52,7 +52,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         navItems.put("Book Check Out", new CheckOutBooksWindow());
         navItems.put("New Member", new AddNewMemberWindow());
         navItems.put("Add Book", new AddBookWindow());
-        navItems.put("Item 3", null);
+        navItems.put("Check overDue", new OverDueBooksWindow());
 
         for (HashMap.Entry<String, JPanel> item : navItems.entrySet()) {
             JButton button = createCustomButton(item.getKey(), "", new Font("Roboto Mono", Font.PLAIN, 12));
