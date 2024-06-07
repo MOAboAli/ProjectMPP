@@ -45,7 +45,7 @@ public class AdminDashboard extends JFrame {
         HashMap<String, JPanel> navItems = new HashMap<>();
         navItems.put("Book Check Out", new CheckOutBooksWindow());
         navItems.put("New Member", new AddNewMemberWindow());
-        navItems.put("Item 2", null);
+        navItems.put("Check Member Records", new CheckOutRecordWindow());
         navItems.put("Item 3", null);
 
         for (HashMap.Entry<String, JPanel> item : navItems.entrySet()) {

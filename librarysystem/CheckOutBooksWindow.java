@@ -21,6 +21,7 @@ public class CheckOutBooksWindow extends JPanel {
     private DefaultTableModel tableModel;
 
     public CheckOutBooksWindow() {
+        SystemController system = new SystemController();
         // Set up the JFrame
         //setTitle("Check Out Books");
         //setSize(1024, 500);
@@ -65,6 +66,16 @@ public class CheckOutBooksWindow extends JPanel {
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
+        system.getAllCheckOutRecord().forEach(checkoutentry -> {
+            tableModel.addRow(new Object[]{
+                    checkoutentry.getBookCopyNumber(),
+                    checkoutentry.getBookIsbnNumber()+" " +checkoutentry.getBookCopy().getBook().getTitle(),
+                    checkoutentry.getCheckoutDate(),
+                    checkoutentry.getDueDate(),
+                    checkoutentry.getLibraryMemberFullName()
+            });
+        });
+
 
         // Add action listener to the button
         button.addActionListener(new ActionListener() {
@@ -74,15 +85,14 @@ public class CheckOutBooksWindow extends JPanel {
                 String inputText2 = textField2.getText();
                 if (!inputText.isEmpty() && !inputText2.isEmpty()) {
 
-                    SystemController system = new SystemController();
+
                     try {
 
                         system.CheckBook(inputText2);
-                        system.CheckMemeber(inputText);
                         BookCopy bookcopy=system.CheckAvailability(inputText2);
-                        CheckoutEntry checkoutentry=system.PutCheckOutEntry(bookcopy,inputText);
+                        CheckoutEntry checkoutentry=system.PutCheckOutEntry(bookcopy,system.CheckMemeber(inputText));
                         tableModel.addRow(new Object[]{checkoutentry.getBookCopyNumber(),
-                                checkoutentry.getBookIsbnNumber(),
+                                checkoutentry.getBookIsbnNumber()+" " +checkoutentry.getBookCopy().getBook().getTitle(),
                                 checkoutentry.getCheckoutDate(), checkoutentry.getDueDate(), checkoutentry.getLibraryMemberFullName()});
 
 

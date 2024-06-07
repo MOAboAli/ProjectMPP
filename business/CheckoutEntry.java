@@ -45,6 +45,9 @@ public class CheckoutEntry implements Serializable {
         return String.format("%s %s", firstName, lastName);
     }
 
+    public BookCopy getBookCopy(){
+        return bookCopy;
+    }
 
     public LocalDate getDueDate() {
         return dueDate;
