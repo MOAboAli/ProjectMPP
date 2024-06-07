@@ -117,7 +117,7 @@ public class SystemController implements ControllerInterface {
 
     }
 
-    public List<CheckoutEntry> getAllCheckOutRecord(){
+    public List<CheckoutEntry> getAllCheckOutEntry(){
         List<CheckoutEntry> Entry = new ArrayList<>();
         new DataAccessFacade().readCheckoutRecord().values().forEach(a-> Entry.addAll(a.getCheckoutEntries()));
         return Entry;

@@ -66,7 +66,7 @@ public class CheckOutBooksWindow extends JPanel {
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
-        system.getAllCheckOutRecord().forEach(checkoutentry -> {
+        system.getAllCheckOutEntry().forEach(checkoutentry -> {
             tableModel.addRow(new Object[]{
                     checkoutentry.getBookCopyNumber(),
                     checkoutentry.getBookIsbnNumber()+" " +checkoutentry.getBookCopy().getBook().getTitle(),
@@ -97,12 +97,11 @@ public class CheckOutBooksWindow extends JPanel {
 
 
                     } catch (BookNotFoundException | MemberNotFoundException | NoBooksCopiesException  ex ) {
-                        tableModel.addRow(new Object[]{ex.getMessage()});
+                        JOptionPane.showMessageDialog(null, "Error:"+ex.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
                     }
                 }
                 else {
-                    tableModel.addRow(new Object[]{"Fields Can't be Empty......................."});
-
+                    JOptionPane.showMessageDialog(null, "Fields Can't be Empty.......................", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
