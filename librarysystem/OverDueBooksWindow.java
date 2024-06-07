@@ -1,5 +1,6 @@
 package librarysystem;
 
+import business.CheckoutEntry;
 import business.SystemController;
 
 import javax.swing.*;
@@ -66,6 +67,10 @@ public class OverDueBooksWindow extends JPanel {
                             checkoutentry.getLibraryMemberFullName()
                     });
                 });
+
+                if(tableModel.getRowCount() ==0)
+                    JOptionPane.showMessageDialog(null, "No Record was found.............", "Warning", JOptionPane.WARNING_MESSAGE);
+
             }
         });
     }

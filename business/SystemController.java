@@ -126,6 +126,13 @@ public class SystemController implements ControllerInterface {
 
     }
 
+    public List<LibraryMember> getAllMember() {
+        List<LibraryMember> Entry = new ArrayList<>();
+        new DataAccessFacade().readMemberMap().values().forEach(a -> Entry.add(a));
+        return Entry;
+
+    }
+
     public List<CheckoutEntry> getOverDueEntries(String isbn) {
         List<CheckoutEntry> checkoutEntryList = getAllCheckOutRecord();
         List<CheckoutEntry> result = new ArrayList<>();

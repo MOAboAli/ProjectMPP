@@ -92,6 +92,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         settingsLabel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                INSTANCE.dispose();
                 dispose();
                 LoginWindow.initialize();
                 LoginWindow.INSTANCE.init();

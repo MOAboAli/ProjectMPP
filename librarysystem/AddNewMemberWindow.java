@@ -6,6 +6,7 @@ import business.rulesets.RuleException;
 import business.rulesets.RuleSetFactory;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class AddNewMemberWindow extends JPanel {
@@ -14,6 +15,7 @@ public class AddNewMemberWindow extends JPanel {
     private JTextField streetField, cityField, stateField,
             zipField, memberIDField, fnameField, lnameField, telField;
     private JButton addButton;
+
 
     public JTextField[] getAllFields() {
         return new JTextField[]{stateField, cityField, stateField, zipField, memberIDField, fnameField, lnameField, telField};
@@ -33,9 +35,13 @@ public class AddNewMemberWindow extends JPanel {
         mainPanel.add(getMemberSection());
         JPanel emptyPanel = new JPanel();
         emptyPanel.setPreferredSize(new Dimension(getSize().width, (int) (AdminDashboard.HEIGHT * 0.5)));
+        emptyPanel.add(Setthetable(), BorderLayout.PAGE_START);
+        //emptyPanel.setLayout(new BorderLayout());
         mainPanel.add(emptyPanel);
         add(mainPanel, BorderLayout.CENTER);
         add(getButtonPanel(), BorderLayout.SOUTH);
+
+
     }
 
     private void addUser() {
@@ -77,7 +83,7 @@ public class AddNewMemberWindow extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         addButton = new JButton("Add New Member");
-        buttonPanel.add(addButton);
+        buttonPanel.add(addButton,BorderLayout.CENTER);
         addButton.addActionListener(e -> {
             try {
                 RuleSetFactory.getRuleSet(this).applyRules(AddNewMemberWindow.this);
@@ -86,6 +92,8 @@ public class AddNewMemberWindow extends JPanel {
                 JOptionPane.showMessageDialog(AddNewMemberWindow.this, exception.getMessage());
             }
         });
+
+        //buttonPanel.add(Setthetable(),BorderLayout.SOUTH);
         return buttonPanel;
     }
 
@@ -147,10 +155,26 @@ public class AddNewMemberWindow extends JPanel {
         return memberPanel;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            AddNewMemberWindow example = new AddNewMemberWindow();
-            example.setVisible(true);
+    private JTable Setthetable(){
+        JTable table;
+        DefaultTableModel tableModel;
+        String[] columnNames = {"memberId.", "fname", "lname", "Address","telephone"};
+        //tableModel = new DefaultTableModel(columnNames, 0);
+        tableModel = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // All cells are non-editable
+            }
+        };
+        table = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(table);
+        add(scrollPane, BorderLayout.CENTER);
+
+        new SystemController().getAllMember().forEach(item -> {
+            tableModel.addRow(new Object[]{
+                    item.getMemberId(),item.getFirstName(),item.getLastName(),item.getAddress(),item.getTelephone()
+            });
         });
+        return  table;
     }
 }
