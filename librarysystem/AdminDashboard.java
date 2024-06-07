@@ -1,5 +1,6 @@
 package librarysystem;
 
+import dataaccess.Auth;
 import dataaccess.User;
 import utils.Utils;
 
@@ -37,15 +38,15 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         user = u;
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                AdminDashboard admin = new AdminDashboard();
-                admin.init();
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                AdminDashboard admin = new AdminDashboard();
+//                admin.init();
+//            }
+//        });
+//    }
 
     @Override
     public void init() {
@@ -120,18 +121,21 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         // Add navigation buttons
         HashMap<String, JPanel> navItems = new HashMap<>();
 
-        //Admin
-        navItems.put("New Member", new AddNewMemberWindow());
-        navItems.put("Add Book", new AddBookWindow());
+        if (user.getAuthorization() == Auth.ADMIN || user.getAuthorization() == Auth.BOTH) {
+            //Admin
+            navItems.put("New Member", new AddNewMemberWindow());
+            navItems.put("Add Book", new AddBookWindow());
+        }
 
 
 
 
-        //Librarian
-        navItems.put("Book Check Out", new CheckOutBooksWindow());
-        navItems.put("Check Member Records", new CheckOutRecordWindow());
-        navItems.put("Check overDue", new OverDueBooksWindow());
-
+        if (user.getAuthorization() == Auth.LIBRARIAN || user.getAuthorization() == Auth.BOTH) {
+            //Librarian
+            navItems.put("Book Check Out", new CheckOutBooksWindow());
+            navItems.put("Check Member Records", new CheckOutRecordWindow());
+            navItems.put("Check overDue", new OverDueBooksWindow());
+        }
 
 
 
