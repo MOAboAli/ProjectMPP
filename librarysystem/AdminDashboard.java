@@ -40,13 +40,6 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         });
     }
 
-    private void updateRightPanel(JPanel newPanel) {
-        rightContainer.removeAll(); // Remove current panel
-        rightContainer.add(newPanel, BorderLayout.CENTER); // Add new panel
-        rightContainer.revalidate(); // Revalidate the container
-        rightContainer.repaint(); // Repaint the container
-    }
-
     @Override
     public void init() {
 // Frame settings
@@ -114,8 +107,8 @@ public class AdminDashboard extends JFrame implements  LibWindow {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 LoginWindow.initialize();
-                 LoginWindow.INSTANCE.init();
-                 LoginWindow.INSTANCE.setVisible(true);
+                LoginWindow.INSTANCE.init();
+                LoginWindow.INSTANCE.setVisible(true);
             }
         });
 
@@ -156,15 +149,6 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         button.setIconTextGap(8);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Set cursor to hand
         return button;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new AdminDashboard();
-            }
-        });
     }
 
     private void updateRightPanel(JPanel newPanel) {
