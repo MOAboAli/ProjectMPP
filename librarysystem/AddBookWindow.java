@@ -1,6 +1,7 @@
 package librarysystem;
 
 import business.*;
+import business.rulesets.RuleSetFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -205,25 +206,57 @@ public class AddBookWindow extends JPanel implements LibWindow  {
     }
 
     private void addBook() {
-        String isbn = isbnField.getText();
-        String title = titleField.getText();
-        int maxCheckoutLength = Integer.parseInt(maxCheckoutLengthField.getText());
-        int numberOfCopies = Integer.parseInt(numberOfCopiesField.getText());
 
-        Book book = new Book(isbn, title,maxCheckoutLength, authors, numberOfCopies);
-        ci.addBook(book);
+        try {
+            RuleSetFactory.getRuleSet(this).applyRules(AddBookWindow.INSTANCE);
 
-        JOptionPane.showMessageDialog(this, "Book added successfully!");
+            // add code
+            String isbn = isbnField.getText();
+            String title = titleField.getText();
+            int maxCheckoutLength = Integer.parseInt(maxCheckoutLengthField.getText());
+            int numberOfCopies = Integer.parseInt(numberOfCopiesField.getText());
 
-        // Clear the fields
-        isbnField.setText("");
-        titleField.setText("");
-        maxCheckoutLengthField.setText("");
-        numberOfCopiesField.setText("");
-        authors.clear();
-        authorTableModel.setRowCount(0);  // Clear the table
+
+            Book book = new Book(isbn, title,maxCheckoutLength, authors, numberOfCopies);
+            ci.addBook(book);
+
+            JOptionPane.showMessageDialog(this, "Book added successfully!");
+
+            // Clear the fields
+            isbnField.setText("");
+            titleField.setText("");
+            maxCheckoutLengthField.setText("");
+            numberOfCopiesField.setText("");
+            authors.clear();
+            authorTableModel.setRowCount(0);  // Clear the table
+        }
+        catch (Exception ex)
+        {
+
+        }
+
     }
 
+
+    public JTextField[] getAllFields() {
+        return new JTextField[]{
+
+
+         isbnField,
+        titleField,
+        // authorFirstNameField,
+        //authorLastNameField,
+        // authorTelephoneField,
+        // authorBioField,
+        // addressStreetField,
+        // addressCityField,
+        // addressStateField,
+         //addressZipField;
+                maxCheckoutLengthField,
+         numberOfCopiesField
+
+        };
+    }
 
 /*
     private void addBook() {

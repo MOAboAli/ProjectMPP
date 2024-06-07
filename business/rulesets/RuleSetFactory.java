@@ -2,6 +2,7 @@ package business.rulesets;
 
 import librarysystem.AddNewMemberWindow;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
@@ -22,5 +23,10 @@ final public class RuleSetFactory {
 		}
 		return map.get(cl);
 	}
-	
+
+	public static boolean isFieldsHasEmptyValue(JTextField field) {
+		return field.getText().isEmpty();
+	}
+
+
 }

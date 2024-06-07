@@ -21,7 +21,7 @@ public class AddMemberRuleSet implements RuleSet {
     public void applyRules(Component ob) throws RuleException {
         AddNewMemberWindow addNewMemberWindow = (AddNewMemberWindow) ob;
         for (JTextField field: addNewMemberWindow.getAllFields()){
-            if (isFieldsHasEmptyValue(field))
+            if (RuleSetFactory.isFieldsHasEmptyValue(field))
                 throw new RuleException("All Field Can't be Empty");
         }
         if (!isMemberIDValid(addNewMemberWindow.getMemberIDField().getText()))
@@ -29,9 +29,6 @@ public class AddMemberRuleSet implements RuleSet {
     }
 
 
-    private boolean isFieldsHasEmptyValue(JTextField field) {
-        return field.getText().isEmpty();
-    }
 
     private boolean isMemberIDValid(String memberID){
         return memberID.matches("-?\\d+");
