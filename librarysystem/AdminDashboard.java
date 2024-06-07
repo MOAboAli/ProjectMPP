@@ -1,5 +1,6 @@
 package librarysystem;
 
+import dataaccess.User;
 import utils.Utils;
 
 import javax.swing.*;
@@ -22,13 +23,18 @@ public class AdminDashboard extends JFrame implements  LibWindow {
     JPanel rightPanel;
     JPanel rightContainer;
 
-    public final static AdminDashboard INSTANCE =new AdminDashboard();
+    public final static AdminDashboard INSTANCE = new AdminDashboard();
 
+    User user;
 
     public AdminDashboard() {
 
     }
 
+    public void setUser(User u)
+    {
+        user = u;
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

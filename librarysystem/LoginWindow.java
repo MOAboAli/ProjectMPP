@@ -18,6 +18,7 @@ import javax.swing.JSplitPane;
 import business.ControllerInterface;
 import business.LoginException;
 import business.SystemController;
+import dataaccess.User;
 
 public class LoginWindow extends JFrame implements LibWindow {
 	public static  LoginWindow INSTANCE = new LoginWindow();
@@ -214,13 +215,14 @@ public class LoginWindow extends JFrame implements LibWindow {
 	private void addLoginButtonListener(JButton butn) {
 		butn.addActionListener(evt -> {
 			try {
-				ci.login(username.getText(), password.getText());
+				User user = ci.login(username.getText(), password.getText());
 				JOptionPane.showMessageDialog(this, "Successful Login");
 
 				EventQueue.invokeLater(() ->
 				{
 					AdminDashboard.INSTANCE.setTitle("Library Application");
 					AdminDashboard.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					AdminDashboard.INSTANCE.setUser(user);
 					AdminDashboard.INSTANCE.init();
 					centerFrameOnDesktop(AdminDashboard.INSTANCE);
 					AdminDashboard.INSTANCE.setVisible(true);
