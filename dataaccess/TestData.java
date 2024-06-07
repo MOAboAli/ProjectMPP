@@ -1,5 +1,8 @@
 package dataaccess;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import business.*;
+
+import static dataaccess.DataAccessFacade.OUTPUT_DIR;
 
 /**
  * This class loads data into the data repository and also
@@ -63,19 +68,17 @@ public class TestData {
 	}
 
 	public void checkInitfiles(){
-
-			DataAccessFacade DataAccess =new DataAccessFacade();
+		Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, "CheckoutRecord");
+		if (!Files.exists(path)) {
 			CheckoutRecord initCheckoutRecord = new CheckoutRecord(members.get(0));
 			CheckoutEntry checkoutentry = new CheckoutEntry(LocalDate.now(), allBooks.get(0).getNextAvailableCopy(), initCheckoutRecord);
-
-			List<CheckoutEntry> List =new ArrayList<>();
+			List<CheckoutEntry> List = new ArrayList<>();
 			List.add(checkoutentry);
-			List<CheckoutRecord> List2 =new ArrayList<>();
+			List<CheckoutRecord> List2 = new ArrayList<>();
 			List2.add(initCheckoutRecord);
-
 			DataAccessFacade.loadCheckoutRecordMap(List2);
 
-
+		}
 	}
 
 	///////////// DATA //////////////

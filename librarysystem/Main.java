@@ -1,5 +1,7 @@
 package librarysystem;
 
+import dataaccess.TestData;
+
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -20,7 +22,9 @@ public class Main {
 	            //LibrarySystem.INSTANCE.setVisible(true);
 
 				//LibrarySystem.getLoginWindow().setVisible(true);
-				// Login
+				//Check the files
+				 new TestData().checkInitfiles();
+				 // Login
 
 				 LoginWindow.INSTANCE.setTitle("Login Library Application");
 				 LoginWindow.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
