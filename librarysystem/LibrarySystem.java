@@ -28,7 +28,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
     JMenuItem login, allBookIds, allMemberIds,addBook;
     String pathToImage;
     private boolean isInitialized = false;
-    
+
+	public static String ResourcesPath=System.getProperty("user.dir")+ "/";
+
+
     private static LibWindow[] allWindows = { 
     	LibrarySystem.INSTANCE,
 		LoginWindow.INSTANCE,
@@ -41,6 +44,16 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		for(LibWindow frame: allWindows) {
 			frame.setVisible(false);			
 		}
+	}
+
+	public static LibWindow getLoginWindow()
+	{
+		return LoginWindow.INSTANCE;
+	}
+
+	public static LibWindow getDashboard()
+	{
+		return AdminDashboard.INSTANCE;
 	}
      
     private LibrarySystem() {}
@@ -87,8 +100,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   allBookIds.addActionListener(new AllBookIdsListener());
  	   allMemberIds = new JMenuItem("All Member Ids");
  	   allMemberIds.addActionListener(new AllMemberIdsListener());
-		addBook = new JMenuItem("Add Book");
-		addBook.addActionListener(new AddBookListener());
+
+		//addBook = new JMenuItem("Add Book");
+		//addBook.addActionListener(new AddBookListener());
  	   options.add(login);
  	   options.add(allBookIds);
  	   options.add(allMemberIds);
@@ -180,7 +194,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			//}
 			//System.out.println(sb.toString());
 			//AddBookWindow.INSTANCE.setData(sb.toString());
-			AddBookWindow.INSTANCE.pack();
+			//AddBookWindow.INSTANCE.pack();
 			//AddBookWindow.INSTANCE.setSize(660,500);
 			Util.centerFrameOnDesktop(AddBookWindow.INSTANCE);
 			AddBookWindow.INSTANCE.setVisible(true);

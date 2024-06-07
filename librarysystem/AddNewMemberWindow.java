@@ -15,77 +15,17 @@ public class AddNewMemberWindow extends JPanel {
 
     public AddNewMemberWindow() {
         setSize(AdminDashboard.WIDTH * 50 / 100, AdminDashboard.HEIGHT);
-        // Main panel with BoxLayout to hold the two sections
+        setLayout(new BorderLayout());
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // Address Panel
-        JPanel addressPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        addressPanel.setBorder(BorderFactory.createTitledBorder("Address Data"));
-
-        // Address fields
-        JLabel addressLabel = new JLabel("Street:");
-        streetField = new JTextField(25);
-
-        JLabel cityLabel = new JLabel("City:");
-        cityField = new JTextField(25);
-
-        JLabel stateLabel = new JLabel("State:");
-        stateField = new JTextField(25);
-
-        JLabel zipLabel = new JLabel("ZIP Code:");
-        zipField = new JTextField(25);
-
-        addressPanel.add(addressLabel);
-        addressPanel.add(streetField);
-        addressPanel.add(cityLabel);
-        addressPanel.add(cityField);
-        addressPanel.add(stateLabel);
-        addressPanel.add(stateField);
-        addressPanel.add(zipLabel);
-        addressPanel.add(zipField);
-
-        // Member Panel
-        JPanel memberPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        memberPanel.setBorder(BorderFactory.createTitledBorder("Member Data"));
-
-        // Member fields
-        JLabel firstNameLabel = new JLabel("First Name:");
-        fnameField = new JTextField(25);
-
-        JLabel lastNameLabel = new JLabel("Last Name:");
-        lnameField = new JTextField(25);
-
-        JLabel emailLabel = new JLabel("MemberID:");
-        memberIDField = new JTextField(25);
-
-        JLabel phoneLabel = new JLabel("Tel:");
-        telField = new JTextField(25);
-
-        //Button
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BorderLayout(10, 10));
-        addButton = new JButton("Add New Member");
-        buttonPanel.add(addButton, BorderLayout.CENTER);
-        addButton.addActionListener(e -> addUser());
-
-        memberPanel.add(firstNameLabel);
-        memberPanel.add(fnameField);
-        memberPanel.add(lastNameLabel);
-        memberPanel.add(lnameField);
-        memberPanel.add(emailLabel);
-        memberPanel.add(memberIDField);
-        memberPanel.add(phoneLabel);
-        memberPanel.add(telField);
-
-        // Adding both panels to the main panel
-        mainPanel.add(addressPanel);
-        mainPanel.add(memberPanel);
-        mainPanel.add(addButton);
-
-        // Adding the main panel to the frame
-        add(mainPanel);
+        mainPanel.add(getAddressSection());
+        mainPanel.add(getMemberSection());
+        JPanel emptyPanel = new JPanel();
+        emptyPanel.setPreferredSize(new Dimension(getSize().width, (int) (AdminDashboard.HEIGHT * 0.5)));
+        mainPanel.add(emptyPanel);
+        add(mainPanel, BorderLayout.CENTER);
+        add(getButtonPanel(), BorderLayout.SOUTH);
     }
 
     private void addUser() {
@@ -123,6 +63,72 @@ public class AddNewMemberWindow extends JPanel {
 
     }
 
+    private JPanel getButtonPanel() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        addButton = new JButton("Add New Member");
+        buttonPanel.add(addButton);
+        addButton.addActionListener(e -> addUser());
+        return buttonPanel;
+    }
+
+    private JPanel getAddressSection() {
+        JPanel addressPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        addressPanel.setBorder(BorderFactory.createTitledBorder("Address Data"));
+
+        // Address fields
+        JLabel addressLabel = new JLabel("Street:");
+        streetField = new JTextField(25);
+
+        JLabel cityLabel = new JLabel("City:");
+        cityField = new JTextField(25);
+
+        JLabel stateLabel = new JLabel("State:");
+        stateField = new JTextField(25);
+
+        JLabel zipLabel = new JLabel("ZIP Code:");
+        zipField = new JTextField(25);
+
+        addressPanel.add(addressLabel);
+        addressPanel.add(streetField);
+        addressPanel.add(cityLabel);
+        addressPanel.add(cityField);
+        addressPanel.add(stateLabel);
+        addressPanel.add(stateField);
+        addressPanel.add(zipLabel);
+        addressPanel.add(zipField);
+
+        return addressPanel;
+    }
+
+    private JPanel getMemberSection() {
+        JPanel memberPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        memberPanel.setBorder(BorderFactory.createTitledBorder("Member Data"));
+
+        // Member fields
+        JLabel firstNameLabel = new JLabel("First Name:");
+        fnameField = new JTextField(25);
+
+        JLabel lastNameLabel = new JLabel("Last Name:");
+        lnameField = new JTextField(25);
+
+        JLabel emailLabel = new JLabel("MemberID:");
+        memberIDField = new JTextField(25);
+
+        JLabel phoneLabel = new JLabel("Tel:");
+        telField = new JTextField(25);
+
+        memberPanel.add(firstNameLabel);
+        memberPanel.add(fnameField);
+        memberPanel.add(lastNameLabel);
+        memberPanel.add(lnameField);
+        memberPanel.add(emailLabel);
+        memberPanel.add(memberIDField);
+        memberPanel.add(phoneLabel);
+        memberPanel.add(telField);
+
+        return memberPanel;
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

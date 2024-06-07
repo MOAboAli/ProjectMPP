@@ -8,17 +8,19 @@ import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class LoginScreen extends JFrame {
+public class LoginTempScreen extends JFrame {
 
     public final static int WIDTH = 1024;
     public final static int HEIGHT = 720;
 
-    public LoginScreen() {
+    public LoginTempScreen() {
         setTitle("Login Screen");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+
+
 
         // Left panel
         JPanel leftPanel = new JPanel();
@@ -29,7 +31,6 @@ public class LoginScreen extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(10, 10, 10, 10);
-
 
 
         // Login Header
@@ -88,14 +89,13 @@ public class LoginScreen extends JFrame {
         boxPanel.add(titleLabel, BorderLayout.NORTH);
         boxPanel.add(textField, BorderLayout.CENTER);
 
-        leftPanel.add(boxPanel,gbc);
+        leftPanel.add(boxPanel, gbc);
 
         // Buttons
         gbc.gridy = 8;
         gbc.gridx = 1;
         JButton loginButton = new JButton("Login");
         leftPanel.add(loginButton, gbc);
-
 
 
         add(leftPanel, BorderLayout.WEST);
@@ -110,7 +110,10 @@ public class LoginScreen extends JFrame {
         rightPanel.add(imageLabel, BorderLayout.CENTER);
 
         add(rightPanel, BorderLayout.CENTER);
+
+
     }
+
     private JTextField createCustomTextField(String placeholder) {
         JTextField textField = new JTextField();
         textField.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -146,7 +149,7 @@ public class LoginScreen extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            LoginScreen loginScreen = new LoginScreen();
+            LoginTempScreen loginScreen = new LoginTempScreen();
             loginScreen.setVisible(true);
         });
     }
