@@ -90,7 +90,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 		rightPanel.setLayout(new GridBagLayout());
 		rightPanel.setBackground(new Color(38, 109, 211));  // Set background color
 
-		JLabel imageLabel = new JLabel(new ImageIcon(LibrarySystem.ResourcesPath + "LoginBG.png"));
+		JLabel imageLabel = new JLabel(new ImageIcon(LibrarySystem.ResourcesPath + "assets/LoginBG.png"));
 		imageLabel.setHorizontalAlignment(JLabel.CENTER);
 		imageLabel.setVerticalAlignment(JLabel.CENTER);
 
