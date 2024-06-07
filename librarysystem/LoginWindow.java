@@ -222,10 +222,10 @@ public class LoginWindow extends JFrame implements LibWindow {
 				{
 					AdminDashboard.INSTANCE.setTitle("Library Application");
 					AdminDashboard.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					AdminDashboard.INSTANCE.setUser(user);
 					AdminDashboard.INSTANCE.init();
 					centerFrameOnDesktop(AdminDashboard.INSTANCE);
 					AdminDashboard.INSTANCE.setVisible(true);
-					AdminDashboard.INSTANCE.setUser(user);
 
 
 
