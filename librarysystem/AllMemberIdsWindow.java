@@ -89,7 +89,12 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
 		isInitialized = val;
 		
 	}
-	
+
+	@Override
+	public void closeWnidow() {
+		INSTANCE.dispose();
+	}
+
 }
 
 

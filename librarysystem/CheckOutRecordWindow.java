@@ -52,7 +52,9 @@ public class CheckOutRecordWindow extends JPanel {
                 String empId = empIdField.getText();
                 CheckoutRecord record = new SystemController().getRecordByEmpId(empId);
 
+
                 // Clear previous results
+                tableModel.setRowCount(0);
                 resultsPanel.removeAll();
 
                 if (record != null) {
