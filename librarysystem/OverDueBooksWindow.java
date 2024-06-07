@@ -1,12 +1,5 @@
 package librarysystem;
 
-import Exception.BookNotFoundException;
-import Exception.MemberNotFoundException;
-import Exception.NoBooksCopiesException;
-import business.BookCopy;
-import business.CheckoutEntry;
-import business.SystemController;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -59,30 +52,8 @@ public class OverDueBooksWindow extends JPanel {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String inputText = textField.getText();
-                String inputText2 = textField2.getText();
-                if (!inputText.isEmpty() && !inputText2.isEmpty()) {
-
-                    SystemController system = new SystemController();
-                    try {
-
-                        system.CheckBook(inputText2);
-                        system.CheckMemeber(inputText);
-                        BookCopy bookcopy=system.CheckAvailability(inputText2);
-                        CheckoutEntry checkoutentry=system.PutCheckOutEntry(bookcopy,inputText);
-                        tableModel.addRow(new Object[]{checkoutentry.getBookCopyNumber(),
-                                checkoutentry.getBookIsbnNumber(),
-                                checkoutentry.getCheckoutDate(), checkoutentry.getDueDate(), checkoutentry.getLibraryMemberFullName()});
 
 
-                    } catch (BookNotFoundException | MemberNotFoundException | NoBooksCopiesException  ex ) {
-                        tableModel.addRow(new Object[]{ex.getMessage()});
-                    }
-                }
-                else {
-                    tableModel.addRow(new Object[]{"Fields Can't be Empty......................."});
-
-                }
             }
         });
     }
