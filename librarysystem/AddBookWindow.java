@@ -82,7 +82,7 @@ public class AddBookWindow extends JPanel implements LibWindow  {
         mainPanel = new JPanel(new BorderLayout(5, 5));
 
 
-        JPanel panel = new JPanel(new GridLayout(15, 2, 5, 5));  // 14 rows, 2 columns, 5px gaps
+        JPanel panel = new JPanel(new GridLayout(18, 2, 5, 5));  // 14 rows, 2 columns, 5px gaps
         panel.add(new JLabel("ISBN:"));
         panel.add(isbnField);
         panel.add(new JLabel("Title:"));
@@ -167,6 +167,11 @@ public class AddBookWindow extends JPanel implements LibWindow  {
 
     @Override
     public void isInitialized(boolean val) {
+
+    }
+
+    @Override
+    public void closeWnidow() {
 
     }
 
