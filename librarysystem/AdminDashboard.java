@@ -2,6 +2,7 @@ package librarysystem;
 
 import dataaccess.Auth;
 import dataaccess.User;
+import utils.JpanelBackGroundImage;
 import utils.Utils;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+
 public class AdminDashboard extends JFrame implements  LibWindow {
 
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -24,43 +26,49 @@ public class AdminDashboard extends JFrame implements  LibWindow {
     JPanel rightPanel;
     JPanel rightContainer;
     JPanel leftNavPanel;
+    JPanel leftPanel;
 
     public final static AdminDashboard INSTANCE = new AdminDashboard();
 
     User user;
-
-    public AdminDashboard() {
-
-    }
 
     public void setUser(User u)
     {
         user = u;
     }
 
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                AdminDashboard admin = new AdminDashboard();
-//                admin.init();
-//            }
-//        });
-//    }
-
     @Override
     public void init() {
-// Frame settings
-        setTitle("Admin Dashboard");
+        // Frame settings
+        setTitle("Main Dashboard");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
         // Main layout
         setLayout(new BorderLayout());
-
         // Left panel for navigation
-        JPanel leftPanel = new JPanel();
+        InitLeft();
+        //Menu
+        menuAdjust();
+        // Add right panel and button panel into a container
+        rightContainer = new JPanel(new BorderLayout());
+        rightContainer.add(new JPanel(), BorderLayout.BEFORE_FIRST_LINE);
+
+        // Split pane
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightContainer);
+        splitPane.setDividerSize(0);
+        splitPane.setDividerLocation(200); // Set initial divider location
+        splitPane.setEnabled(false);
+
+        add(splitPane, BorderLayout.CENTER);
+
+        setVisible(true);
+        LibrarySystem.getLoginWindow().closeWnidow();
+        updateRightPanel(new JpanelBackGroundImage());
+    }
+
+    private void InitLeft(){
+        leftPanel = new JPanel();
         leftPanel.setLayout(new GridLayout(9, 1));
         leftPanel.setPreferredSize(new Dimension(WIDTH * 40 / 100, getHeight()));
         leftPanel.setBackground(Color.LIGHT_GRAY);
@@ -74,13 +82,10 @@ public class AdminDashboard extends JFrame implements  LibWindow {
 
 
         // Add admin greeting
-        JLabel adminLabel = new JLabel("Hello admin!", JLabel.CENTER);
+        JLabel adminLabel = new JLabel("Hello "+user.getId(), JLabel.CENTER);
         adminLabel.setFont(new Font("Arial", Font.BOLD, 20));
         adminLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftNavPanel.add(adminLabel);
-
-        menuAdjust();
-
         // Add settings icon
         JButton settingsLabel = createCustomButton("Logout", Utils.assets_dir + "logout.png", new Font("Roboto Mono", Font.PLAIN, 12));
         settingsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -95,26 +100,6 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         });
 
         leftPanel.add(settingsLabel, BorderLayout.SOUTH);
-
-        // Right panel for user form
-        rightPanel = new JPanel();
-        rightPanel.setBackground(Color.white);
-
-
-        // Add right panel and button panel into a container
-        rightContainer = new JPanel(new BorderLayout());
-        rightContainer.add(new JPanel(), BorderLayout.BEFORE_FIRST_LINE);
-        // Split pane
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightContainer);
-        splitPane.setDividerSize(0);
-        splitPane.setDividerLocation(200); // Set initial divider location
-        splitPane.setEnabled(false);
-
-        add(splitPane, BorderLayout.CENTER);
-
-        setVisible(true);
-        LibrarySystem.getLoginWindow().closeWnidow();
-
     }
 
     private void menuAdjust(){
@@ -184,9 +169,6 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         rightContainer.revalidate(); // Revalidate the container
         rightContainer.repaint(); // Repaint the container
     }
-
-
-
 
     @Override
     public boolean isInitialized() {

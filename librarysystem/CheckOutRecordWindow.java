@@ -70,8 +70,8 @@ public class CheckOutRecordWindow extends JPanel {
                     }
                     //
                 } else {
-                    JLabel messageLabel = new JLabel();
-                    tableModel.addRow(new Object[]{"No employee found for employee ID: " + empId});
+                    JOptionPane.showMessageDialog(null, "No Record was found.............", "Warning", JOptionPane.WARNING_MESSAGE);
+
                 }
 
                 // Revalidate and repaint the panel

@@ -216,7 +216,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 		butn.addActionListener(evt -> {
 			try {
 				User user = ci.login(username.getText(), password.getText());
-				JOptionPane.showMessageDialog(this, "Successful Login");
+				//JOptionPane.showMessageDialog(this, "Successful Login");
 
 				EventQueue.invokeLater(() ->
 				{
