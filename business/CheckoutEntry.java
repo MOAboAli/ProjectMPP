@@ -18,7 +18,7 @@ public class CheckoutEntry implements Serializable {
         this.bookCopy = bookCopy;
         this.checkoutRecord = checkoutRecord;
         setDueDate(
-                LocalDate.now().plusDays(7)
+                LocalDate.now().plusDays(-1)
         );
     }
 
