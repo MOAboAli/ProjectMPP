@@ -1,5 +1,7 @@
 package librarysystem;
 
+import business.SystemController;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -17,9 +19,10 @@ public class OverDueBooksWindow extends JPanel {
     private DefaultTableModel tableModel;
 
     public OverDueBooksWindow() {
+        SystemController system = new SystemController();
         setLayout(new BorderLayout());
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new BoxLayout(inputPanel,BoxLayout.X_AXIS));
+        inputPanel.setLayout(new FlowLayout());
         inputPanel.setBorder(new EmptyBorder(10,10,10,10));
         JLabel label2 = new JLabel("ISBN:");
         inputPanel.add(label2);
@@ -52,8 +55,17 @@ public class OverDueBooksWindow extends JPanel {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
+                tableModel.setRowCount(0);
+                table.removeAll();
+                system.getOverDueEntries(textField2.getText()).forEach(checkoutentry -> {
+                    tableModel.addRow(new Object[]{
+                            checkoutentry.getBookCopyNumber(),
+                            checkoutentry.getBookIsbnNumber()+" " +checkoutentry.getBookCopy().getBook().getTitle(),
+                            checkoutentry.getCheckoutDate(),
+                            checkoutentry.getDueDate(),
+                            checkoutentry.getLibraryMemberFullName()
+                    });
+                });
             }
         });
     }

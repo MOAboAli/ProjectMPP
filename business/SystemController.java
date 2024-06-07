@@ -1,12 +1,6 @@
 package business;
 
 import Exception.AddNewMemberException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
 import Exception.BookNotFoundException;
 import Exception.MemberNotFoundException;
 import Exception.NoBooksCopiesException;
@@ -80,7 +74,6 @@ public class SystemController implements ControllerInterface {
     }
 
 
-
     //////////////////////Book Check Out///////////////////////////
 
     public void CheckBook(String BookISBN) throws BookNotFoundException {
@@ -126,13 +119,23 @@ public class SystemController implements ControllerInterface {
 
     }
 
-    public List<CheckoutEntry> getAllCheckOutEntry(){
+    public List<CheckoutEntry> getAllCheckOutRecord() {
         List<CheckoutEntry> Entry = new ArrayList<>();
-        new DataAccessFacade().readCheckoutRecord().values().forEach(a-> Entry.addAll(a.getCheckoutEntries()));
+        new DataAccessFacade().readCheckoutRecord().values().forEach(a -> Entry.addAll(a.getCheckoutEntries()));
         return Entry;
 
     }
 
+    public List<CheckoutEntry> getOverDueEntries(String isbn) {
+        List<CheckoutEntry> checkoutEntryList = getAllCheckOutRecord();
+        List<CheckoutEntry> result = new ArrayList<>();
+        for (CheckoutEntry entry : checkoutEntryList) {
+            if (entry.getBookCopy().getBook().getIsbn().equals(isbn) && entry.getDueDate().isBefore(LocalDate.now())) {
+                result.add(entry);
+            }
+        }
+        return result;
+    }
 
 
 }
