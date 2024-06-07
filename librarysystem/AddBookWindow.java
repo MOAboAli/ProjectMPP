@@ -170,6 +170,11 @@ public class AddBookWindow extends JPanel implements LibWindow  {
 
     }
 
+    @Override
+    public void closeWnidow() {
+
+    }
+
     private void addAuthor() {
         String firstName = authorFirstNameField.getText();
         String lastName = authorLastNameField.getText();

@@ -108,4 +108,9 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 		isInitialized = val;
 		
 	}
+
+	@Override
+	public void closeWnidow() {
+
+	}
 }

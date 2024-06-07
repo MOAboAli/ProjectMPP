@@ -21,6 +21,11 @@ public class LoginTempWindow extends JFrame implements LibWindow {
 
     }
 
+    @Override
+    public void closeWnidow() {
+
+    }
+
 
     public LoginTempWindow() {
         // Set up the frame
@@ -133,7 +138,7 @@ public class LoginTempWindow extends JFrame implements LibWindow {
 
 
         // Add your image to the right panel
-        JLabel imageLabel = new JLabel(new ImageIcon(LibrarySystem.ResourcesPath + "LoginBG.png"));  // replace with your image path
+        JLabel imageLabel = new JLabel(new ImageIcon(LibrarySystem.ResourcesPath + "assets/LoginBG.png"));  // replace with your image path
         //rightPanel.add(imageLabel, BorderLayout.CENTER);
         imageLabel.setHorizontalAlignment(JLabel.CENTER); // Center horizontally
         imageLabel.setVerticalAlignment(JLabel.CENTER); // Center vertically
