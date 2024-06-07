@@ -2,6 +2,8 @@ package librarysystem;
 
 import Exception.AddNewMemberException;
 import business.SystemController;
+import business.rulesets.RuleException;
+import business.rulesets.RuleSetFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +14,14 @@ public class AddNewMemberWindow extends JPanel {
     private JTextField streetField, cityField, stateField,
             zipField, memberIDField, fnameField, lnameField, telField;
     private JButton addButton;
+
+    public JTextField[] getAllFields() {
+        return new JTextField[]{stateField, cityField, stateField, zipField, memberIDField, fnameField, lnameField, telField};
+    }
+
+    public JTextField getMemberIDField() {
+        return memberIDField;
+    }
 
     public AddNewMemberWindow() {
         setSize(AdminDashboard.WIDTH * 50 / 100, AdminDashboard.HEIGHT);
@@ -68,7 +78,14 @@ public class AddNewMemberWindow extends JPanel {
         buttonPanel.setLayout(new FlowLayout());
         addButton = new JButton("Add New Member");
         buttonPanel.add(addButton);
-        addButton.addActionListener(e -> addUser());
+        addButton.addActionListener(e -> {
+            try {
+                RuleSetFactory.getRuleSet(this).applyRules(AddNewMemberWindow.this);
+                addUser();
+            } catch (RuleException exception ) {
+                JOptionPane.showMessageDialog(AddNewMemberWindow.this, exception.getMessage());
+            }
+        });
         return buttonPanel;
     }
 
