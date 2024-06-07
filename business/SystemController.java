@@ -23,18 +23,21 @@ import java.util.List;
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
     DataAccessFacade DataAccess =new DataAccessFacade();
-	public void login(String id, String password) throws LoginException {
+
+	public User login(String id, String password) throws LoginException {
 		DataAccess da = new DataAccessFacade();
 		HashMap<String, User> map = da.readUserMap();
 		if(!map.containsKey(id)) {
 			throw new LoginException("ID " + id + " not found");
 		}
-		String passwordFound = map.get(id).getPassword();
+        User user = map.get(id);
+		String passwordFound = user.getPassword();
 		if(!passwordFound.equals(password)) {
 			throw new LoginException("Password incorrect");
 		}
-		currentAuth = map.get(id).getAuthorization();
-		
+		currentAuth = user.getAuthorization();
+
+        return user;
 	}
 	@Override
 	public List<String> allMemberIds() {
