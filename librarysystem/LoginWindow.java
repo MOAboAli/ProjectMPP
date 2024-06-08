@@ -218,20 +218,12 @@ public class LoginWindow extends JFrame implements LibWindow {
 				User user = ci.login(username.getText(), password.getText());
 				//JOptionPane.showMessageDialog(this, "Successful Login");
 
-				EventQueue.invokeLater(() ->
-				{
-					AdminDashboard.INSTANCE.setTitle("Library Application");
-					AdminDashboard.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					AdminDashboard.INSTANCE.setUser(user);
-					AdminDashboard.INSTANCE.init();
-					centerFrameOnDesktop(AdminDashboard.INSTANCE);
-					AdminDashboard.INSTANCE.setVisible(true);
-
-
-
-					//LibrarySystem.getLoginWindow().setVisible(true);
-
-				});
+				AdminDashboard.INSTANCE.setTitle("Library Application");
+				AdminDashboard.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				AdminDashboard.INSTANCE.setUser(user);
+				AdminDashboard.INSTANCE.init();
+				centerFrameOnDesktop(AdminDashboard.INSTANCE);
+				AdminDashboard.INSTANCE.setVisible(true);
 
 			} catch (LoginException ex) {
 				JOptionPane.showMessageDialog(this, ex.getMessage());
