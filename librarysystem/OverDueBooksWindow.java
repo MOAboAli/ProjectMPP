@@ -1,14 +1,11 @@
 package librarysystem;
 
-import business.CheckoutEntry;
 import business.SystemController;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class OverDueBooksWindow extends JPanel {
 
@@ -18,9 +15,10 @@ public class OverDueBooksWindow extends JPanel {
     private JButton button;
     private JTable table;
     private DefaultTableModel tableModel;
+    SystemController system;
 
     public OverDueBooksWindow() {
-        SystemController system = new SystemController();
+        system= new SystemController();
         setLayout(new BorderLayout());
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new FlowLayout());
@@ -40,7 +38,7 @@ public class OverDueBooksWindow extends JPanel {
         add(inputPanel, BorderLayout.PAGE_START);
 
         // Set up the table model and table
-        String[] columnNames = {"Copy No.", "Book ISBN", "Checkout Date", "Due Date", "Library Member"};
+        String[] columnNames = {"Library Member","Book title","Copy No.", "ISBN", "Checkout Date", "Due Date"};
         //tableModel = new DefaultTableModel(columnNames, 0);
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -53,25 +51,25 @@ public class OverDueBooksWindow extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
 
         // Add action listener to the button
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tableModel.setRowCount(0);
-                table.removeAll();
-                system.getOverDueEntries(textField2.getText()).forEach(checkoutentry -> {
-                    tableModel.addRow(new Object[]{
-                            checkoutentry.getBookCopyNumber(),
-                            checkoutentry.getBookIsbnNumber()+" " +checkoutentry.getBookCopy().getBook().getTitle(),
-                            checkoutentry.getCheckoutDate(),
-                            checkoutentry.getDueDate(),
-                            checkoutentry.getLibraryMemberFullName()
-                    });
-                });
+        button.addActionListener(e -> searchOverDue(textField2.getText()));
+    }
 
-                if(tableModel.getRowCount() ==0)
-                    JOptionPane.showMessageDialog(null, "No Record was found.............", "Warning", JOptionPane.WARNING_MESSAGE);
-
-            }
+    private void searchOverDue(String isbn) {
+        tableModel.setRowCount(0);
+        table.removeAll();
+        system.getOverDueEntries(isbn).forEach(checkoutentry -> {
+            tableModel.addRow(new Object[]{
+                    checkoutentry.getLibraryMemberFullName(),
+                    checkoutentry.getBookCopy().getBook().getTitle(),
+                    checkoutentry.getBookCopyNumber(),
+                    checkoutentry.getBookIsbnNumber(),
+                    checkoutentry.getCheckoutDate(),
+                    checkoutentry.getDueDate()
+            });
         });
+
+        if(tableModel.getRowCount() ==0)
+            JOptionPane.showMessageDialog(null, "No Record was found.............", "Warning", JOptionPane.WARNING_MESSAGE);
+
     }
 }
