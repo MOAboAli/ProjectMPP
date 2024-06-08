@@ -38,7 +38,7 @@ public class OverDueBooksWindow extends JPanel {
         add(inputPanel, BorderLayout.PAGE_START);
 
         // Set up the table model and table
-        String[] columnNames = {"Copy No.", "Book ISBN", "Checkout Date", "Due Date", "Library Member"};
+        String[] columnNames = {"Library Member","Book title","Copy No.", "ISBN", "Checkout Date", "Due Date"};
         //tableModel = new DefaultTableModel(columnNames, 0);
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -59,11 +59,12 @@ public class OverDueBooksWindow extends JPanel {
         table.removeAll();
         system.getOverDueEntries(isbn).forEach(checkoutentry -> {
             tableModel.addRow(new Object[]{
+                    checkoutentry.getLibraryMemberFullName(),
+                    checkoutentry.getBookCopy().getBook().getTitle(),
                     checkoutentry.getBookCopyNumber(),
-                    checkoutentry.getBookIsbnNumber()+" " +checkoutentry.getBookCopy().getBook().getTitle(),
+                    checkoutentry.getBookIsbnNumber(),
                     checkoutentry.getCheckoutDate(),
-                    checkoutentry.getDueDate(),
-                    checkoutentry.getLibraryMemberFullName()
+                    checkoutentry.getDueDate()
             });
         });
 
