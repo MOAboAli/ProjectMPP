@@ -91,6 +91,7 @@ public class AdminDashboard extends JFrame implements  LibWindow {
                 LoginWindow.initialize();
                 LoginWindow.INSTANCE.init();
                 LoginWindow.INSTANCE.setVisible(true);
+                user = null;
             }
         });
 
