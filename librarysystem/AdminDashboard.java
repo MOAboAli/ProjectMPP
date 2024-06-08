@@ -9,10 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 
@@ -28,9 +24,8 @@ public class AdminDashboard extends JFrame implements  LibWindow {
     JPanel leftNavPanel;
     JPanel leftPanel;
 
-    public final static AdminDashboard INSTANCE = new AdminDashboard();
 
-    User user;
+    private User user;
 
     public void setUser(User u)
     {
@@ -92,7 +87,6 @@ public class AdminDashboard extends JFrame implements  LibWindow {
         settingsLabel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                INSTANCE.dispose();
                 dispose();
                 LoginWindow.initialize();
                 LoginWindow.INSTANCE.init();
@@ -184,6 +178,6 @@ public class AdminDashboard extends JFrame implements  LibWindow {
 
     @Override
     public void closeWnidow() {
-        INSTANCE.dispose();
+       dispose();
     }
 }

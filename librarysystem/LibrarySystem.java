@@ -1,22 +1,14 @@
 package librarysystem;
 
+import business.ControllerInterface;
+import business.SystemController;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-
-import business.ControllerInterface;
-import business.SystemController;
 
 
 public class LibrarySystem extends JFrame implements LibWindow {
@@ -51,10 +43,6 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		return LoginWindow.INSTANCE;
 	}
 
-	public static LibWindow getDashboard()
-	{
-		return AdminDashboard.INSTANCE;
-	}
      
     private LibrarySystem() {}
     
