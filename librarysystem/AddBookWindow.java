@@ -28,16 +28,18 @@ public class AddBookWindow extends JPanel implements LibWindow  {
 
     private JTextField isbnField;
     private JTextField titleField;
+    private JTextField maxCheckoutLengthField;
+    private JTextField numberOfCopiesField;
+
     private JTextField authorFirstNameField;
     private JTextField authorLastNameField;
     private JTextField authorTelephoneField;
     private JTextField authorBioField;
-    private JTextField addressStreetField;
-    private JTextField addressCityField;
-    private JTextField addressStateField;
-    private JTextField addressZipField;
-    private JTextField maxCheckoutLengthField;
-    private JTextField numberOfCopiesField;
+    private JTextField authoraddressStreetField;
+    private JTextField authorAddressCityField;
+    private JTextField authorAddressStateField;
+    private JTextField authorAddressZipField;
+
     private JButton addAuthorButton;
     private JButton addButton;
 
@@ -66,10 +68,10 @@ public class AddBookWindow extends JPanel implements LibWindow  {
         authorLastNameField = new JTextField(15);
         authorTelephoneField = new JTextField(15);
         authorBioField = new JTextField(15);
-        addressStreetField = new JTextField(15);
-        addressCityField = new JTextField(15);
-        addressStateField = new JTextField(15);
-        addressZipField = new JTextField(15);
+        authoraddressStreetField = new JTextField(15);
+        authorAddressCityField = new JTextField(15);
+        authorAddressStateField = new JTextField(15);
+        authorAddressZipField = new JTextField(15);
         maxCheckoutLengthField = new JTextField(15);
         numberOfCopiesField = new JTextField(15);
         addAuthorButton = new JButton("Add Author");
@@ -106,13 +108,13 @@ public class AddBookWindow extends JPanel implements LibWindow  {
         panel.add(new JLabel("Author Bio:"));
         panel.add(authorBioField);
         panel.add(new JLabel("Address Street:"));
-        panel.add(addressStreetField);
+        panel.add(authoraddressStreetField);
         panel.add(new JLabel("Address City:"));
-        panel.add(addressCityField);
+        panel.add(authorAddressCityField);
         panel.add(new JLabel("Address State:"));
-        panel.add(addressStateField);
+        panel.add(authorAddressStateField);
         panel.add(new JLabel("Address Zip:"));
-        panel.add(addressZipField);
+        panel.add(authorAddressZipField);
         panel.add(new JLabel(""));
         panel.add(addAuthorButton);
 
@@ -151,7 +153,7 @@ public class AddBookWindow extends JPanel implements LibWindow  {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addBook();
+                        addBook();
             }
         });
     }
@@ -181,10 +183,10 @@ public class AddBookWindow extends JPanel implements LibWindow  {
         String lastName = authorLastNameField.getText();
         String telephone = authorTelephoneField.getText();
         String bio = authorBioField.getText();
-        String street = addressStreetField.getText();
-        String city = addressCityField.getText();
-        String state = addressStateField.getText();
-        String zip = addressZipField.getText();
+        String street = authoraddressStreetField.getText();
+        String city = authorAddressCityField.getText();
+        String state = authorAddressStateField.getText();
+        String zip = authorAddressZipField.getText();
         Address address = new Address(street, city, state, zip);
         authors.add(new Author(firstName, lastName, telephone, address, bio));
 
@@ -198,10 +200,10 @@ public class AddBookWindow extends JPanel implements LibWindow  {
         authorLastNameField.setText("");
         authorTelephoneField.setText("");
         authorBioField.setText("");
-        addressStreetField.setText("");
-        addressCityField.setText("");
-        addressStateField.setText("");
-        addressZipField.setText("");
+        authoraddressStreetField.setText("");
+        authorAddressCityField.setText("");
+        authorAddressStateField.setText("");
+        authorAddressZipField.setText("");
 
     }
 
@@ -238,6 +240,56 @@ public class AddBookWindow extends JPanel implements LibWindow  {
     }
 
 
+    public JTextField getIsbnField() {
+        return isbnField;
+    }
+
+    public JTextField getTitleField() {
+        return titleField;
+    }
+
+    public JTextField getMaxCheckoutLengthField() {
+        return maxCheckoutLengthField;
+    }
+
+    public JTextField getNumberOfCopiesField() {
+        return numberOfCopiesField;
+    }
+
+
+    // auth attribute
+    public JTextField getAuthorFirstNameField() {
+        return authorFirstNameField;
+    }
+
+    public JTextField getAuthorLastNameField() {
+        return authorLastNameField;
+    }
+
+    public JTextField getAuthorTelephoneField() {
+        return authorTelephoneField;
+    }
+
+    public JTextField getAuthorBioField() {
+        return authorBioField;
+    }
+
+    public JTextField getAuthoraddressStreetField() {
+        return authoraddressStreetField;
+    }
+
+    public JTextField getAuthorAddressCityField() {
+        return authorAddressCityField;
+    }
+
+    public JTextField getAuthorAddressStateField() {
+        return authorAddressStateField;
+    }
+
+    public JTextField getAuthorAddressZipField() {
+        return authorAddressZipField;
+    }
+
     public JTextField[] getAllFields() {
         return new JTextField[]{
 
@@ -248,10 +300,10 @@ public class AddBookWindow extends JPanel implements LibWindow  {
         //authorLastNameField,
         // authorTelephoneField,
         // authorBioField,
-        // addressStreetField,
-        // addressCityField,
-        // addressStateField,
-         //addressZipField;
+        // authoraddressStreetField,
+        // authorAddressCityField,
+        // authorAddressStateField,
+         //authorAddressZipField;
                 maxCheckoutLengthField,
          numberOfCopiesField
 
